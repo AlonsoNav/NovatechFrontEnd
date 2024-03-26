@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">Novatech</string>
+    <string name="login_title">Login</string>
+    <string name="login_description">Please sign in to continue</string>
+    <string name="login_email">User\'s email</string>
+    <string name="login_email_img_description">User\'s email icon</string>
+    <string name="login_password">User\'s password</string>
+    <string name="login_password_img_description">User\'s password icon</string>
+    <string name="login_btn">Login</string>
+    <string name="login_logo">Novatech\'s logo</string>
+    <string name="title_activity_menu">Menu</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="menu_project">Project</string>
+    <string name="menu_forum">Forum</string>
+    <string name="menu_collaborators">Collaborators</string>
+    <string name="menu_logout">Logout</string>
+    <string name="project_fragment">Hello project</string>
+    <string name="forum_fragment">Hello forum</string>
+    <string name="profile_title">Profile</string>
+    <string name="profile_name">Name</string>
+    <string name="profile_id">303330333</string>
+    <string name="profile_project">Project name</string>
+    <string name="profile_department">Department name</string>
+    <string name="profile_telephone">88888888</string>
+    <string name="profile_email">email@estudiantec.cr</string>
+    <string name="profile_password">********</string>
+    <string name="popup_yes">Yes</string>
+    <string name="popup_no">No</string>
+    <string name="popup_ok">OK</string>
+    <string name="popup_logout">Are you sure you want to log out?</string>
+    <string name="profile_picture_description">User\'s picture</string>
+    <string name="profile_btn">Save changes</string>
 </resources>

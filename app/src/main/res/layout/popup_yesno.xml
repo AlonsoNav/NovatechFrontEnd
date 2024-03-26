@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="363dp"
+    android:layout_height="143dp"
+    android:minWidth="363dp"
+    android:minHeight="143dp"
+    android:background="@drawable/round_popup">
+
+    <TextView
+        android:id="@+id/pup_yes_no_description"
+        android:layout_width="310dp"
+        android:layout_height="68dp"
+        android:fontFamily="@font/roboto"
+        android:gravity="center_horizontal"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.112"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/pup_yes_btn"
+        android:layout_width="140dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/round_popup"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/roboto"
+        android:text="@string/popup_yes"
+        android:textAllCaps="false"
+        android:textColor="@color/btn_color"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/pup_no_btn"
+        android:layout_width="140dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/round_popup"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/roboto"
+        android:text="@string/popup_no"
+        android:textAllCaps="false"
+        android:textColor="@color/btn_color"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="181.5dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

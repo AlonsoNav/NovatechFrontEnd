@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/menu_project"
+        android:icon="@drawable/project"
+        android:id="@+id/menu_project"/>
+    <item android:title="@string/menu_forum"
+        android:icon="@drawable/forum"
+        android:id="@+id/menu_forum"/>
+    <item android:title="@string/menu_collaborators"
+        android:icon="@drawable/person"
+        android:id="@+id/menu_collaborators"/>
+    <item android:title="@string/menu_logout"
+        android:icon="@drawable/logout"
+        android:id="@+id/menu_logout"/>
+</menu>

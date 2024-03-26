@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.Login">
+
+    <TextView
+        android:id="@+id/login_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="365dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/login_title"
+        android:textColor="@color/black"
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/login_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="412dp"
+        android:fontFamily="@font/roboto_light"
+        android:text="@string/login_description"
+        android:textColor="@color/secondary_text"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/login_email_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="505dp"
+        android:src="@drawable/person"
+        android:contentDescription="@string/login_email_img_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/login_email"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="496dp"
+        android:layout_marginStart="8dp"
+        android:autofillHints="emailAddress"
+        android:ems="10"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/login_email"
+        android:inputType="textEmailAddress"
+        android:maxLength="128"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/login_email_img"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/login_password_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="570dp"
+        android:contentDescription="@string/login_password_img_description"
+        android:src="@drawable/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="564dp"
+        android:layout_marginStart="8dp"
+        android:autofillHints="password"
+        android:ems="10"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/login_password"
+        android:inputType="textPassword"
+        android:maxLength="64"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/login_password_img"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/login_btn"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="710dp"
+        android:background="@drawable/round_btn"
+        android:fontFamily="@font/roboto"
+        android:text="@string/login_btn"
+        android:textSize="22sp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/login_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo"
+        android:contentDescription="@string/login_logo" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
