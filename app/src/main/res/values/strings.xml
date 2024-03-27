@@ -32,4 +32,21 @@
     <string name="popup_logout">Are you sure you want to log out?</string>
     <string name="profile_picture_description">User\'s picture</string>
     <string name="profile_btn">Save changes</string>
+    <string name="profile_current_password">Current Password</string>
+    <string name="profile_new_password">New Password</string>
+    <string name="popup_yesno_profile">Are you sure you want to keep changes?</string>
+    <string name="popup_ok_profile">Changes saved successfully</string>
+    <string name="project_individual_name">Project name</string>
+    <string name="project_individual_start_date">02/04/2024</string>
+    <string name="project_individual_description_title">Description</string>
+    <string name="project_individual_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="project_individual_status_title">Status</string>
+    <string name="project_individual_coordinator_title">Coordinated by</string>
+    <string name="project_individual_budget_title">Budget</string>
+    <string name="project_individual_budget">$1000</string>
+    <string name="project_individual_resources">Resources</string>
+    <string name="project_individual_meeting">Meetings</string>
+    <string name="project_individual_task">Tasks</string>
+    <string name="popup_yesno_project_individual">Are you sure you want to keep changes?</string>
+    <string name="popup_ok_project_individual">Changes saved successfully</string>
 </resources>

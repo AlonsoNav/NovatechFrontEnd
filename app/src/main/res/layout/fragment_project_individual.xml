@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ProjectIndividualFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="742dp">
+
+        <TextView
+            android:id="@+id/project_individual_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="25dp"
+            android:background="@drawable/back"
+            android:backgroundTint="@color/btn_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/project_individual_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/project_individual_name"
+            android:textColor="@color/item_selected"
+            android:fontFamily="@font/roboto"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/project_individual_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:text="@string/project_individual_start_date"
+            android:textColor="@color/item_selected"
+            android:fontFamily="@font/roboto_light"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/project_individual_description_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_marginStart="30dp"
+            android:text="@string/project_individual_description_title"
+            android:textColor="@color/item_selected"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/project_individual_description"
+            android:layout_width="351dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="130dp"
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/roboto_light"
+            android:text="@string/project_individual_description"
+            android:textColor="@color/item_selected"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/project_individual_description_et"
+            android:layout_width="351dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="130dp"
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/roboto_light"
+            android:hint="@string/project_individual_description"
+            android:textColor="@color/item_selected"
+            android:textSize="13sp"
+            android:inputType="textMultiLine"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:autofillHints="" />
+
+        <TextView
+            android:id="@+id/project_individual_status_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:text="@string/project_individual_status_title"
+            android:textColor="@color/item_selected"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/project_individual_description_et" />
+
+        <Spinner
+            android:id="@+id/project_individual_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/project_individual_status_title"
+            app:layout_constraintTop_toBottomOf="@+id/project_individual_description_et" />
+
+        <TextView
+            android:id="@+id/project_individual_coordinator_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:text="@string/project_individual_coordinator_title"
+            android:textColor="@color/item_selected"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/project_individual_status_title" />
+
+        <Spinner
+            android:id="@+id/project_individual_coordinator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/project_individual_coordinator_title"
+            app:layout_constraintTop_toBottomOf="@+id/project_individual_status_title" />
+
+        <TextView
+            android:id="@+id/project_individual_budget_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/project_individual_budget_title"
+            android:textColor="@color/item_selected"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/project_individual_budget_et"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/project_individual_coordinator_title" />
+
+        <TextView
+            android:id="@+id/project_individual_budget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/project_individual_budget"
+            android:textColor="@color/item_selected"
+            android:fontFamily="@font/roboto_light"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/project_individual_budget_et"
+            app:layout_constraintStart_toEndOf="@id/project_individual_budget_title"
+            app:layout_constraintTop_toBottomOf="@id/project_individual_coordinator_title" />
+
+        <EditText
+            android:id="@+id/project_individual_budget_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:hint="@string/project_individual_budget"
+            android:textColor="@color/item_selected"
+            android:fontFamily="@font/roboto_light"
+            android:textSize="13sp"
+            android:inputType="number"
+            android:maxLength="14"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@id/project_individual_budget_title"
+            app:layout_constraintTop_toBottomOf="@id/project_individual_coordinator_title"
+            android:autofillHints="" />
+
+        <Button
+            android:id="@+id/project_individual_btn"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/round_btn"
+            android:text="@string/profile_btn"
+            android:textAllCaps="false"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/project_individual_add_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/add_person"
+            android:backgroundTint="@color/item_selected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/project_individual_name"/>
+
+        <TextView
+            android:id="@+id/project_individual_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/history"
+            android:backgroundTint="@color/item_selected"
+            app:layout_constraintEnd_toStartOf="@id/project_individual_add_person"
+            app:layout_constraintBottom_toBottomOf="@id/project_individual_name"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/project_individual_resources"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:paddingHorizontal="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_btn"
+            android:backgroundTint="@color/secondary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/project_individual_meeting">
+
+            <TextView
+                android:id="@+id/project_individual_resources_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/resources"
+                android:backgroundTint="@color/item_selected"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/project_individual_resources_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/project_individual_resources"
+                android:textColor="@color/item_selected"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/project_individual_resources_icon"
+                app:layout_constraintStart_toEndOf="@+id/project_individual_resources_icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/project_individual_meeting"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:paddingHorizontal="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/round_btn"
+            android:backgroundTint="@color/secondary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/project_individual_budget_title">
+
+            <TextView
+                android:id="@+id/project_individual_meeting_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/meeting"
+                android:backgroundTint="@color/item_selected"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/project_individual_meeting_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/project_individual_meeting"
+                android:textColor="@color/item_selected"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/project_individual_meeting_icon"
+                app:layout_constraintStart_toEndOf="@+id/project_individual_meeting_icon"
+                app:layout_constraintTop_toTopOf="@+id/project_individual_meeting_icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/project_individual_task"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:paddingHorizontal="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_btn"
+            android:backgroundTint="@color/secondary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/project_individual_resources">
+
+            <TextView
+                android:id="@+id/project_individual_task_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/task"
+                android:backgroundTint="@color/item_selected"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/project_individual_task_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/project_individual_task"
+                android:textColor="@color/item_selected"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/project_individual_task_icon"
+                app:layout_constraintStart_toEndOf="@+id/project_individual_task_icon"
+                app:layout_constraintTop_toTopOf="@+id/project_individual_task_icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
