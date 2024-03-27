@@ -15,6 +15,7 @@ import com.app.novatech.databinding.PopupYesnoBinding
 class Menu : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
     private val projectFragment = ProjectFragment()
+    private val projectIndividualFragment = ProjectIndividualFragment()
     private val forumFragment = ForumFragment()
     private val collaboratorsFragment = CollaboratorsFragment()
 
@@ -36,7 +37,7 @@ class Menu : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener{item ->
             when (item.itemId){
                 R.id.menu_project -> {
-                    replaceFragment(projectFragment)
+                    replaceFragment(projectIndividualFragment)
                 }
                 R.id.menu_forum -> {
                     replaceFragment(forumFragment)
@@ -65,8 +66,6 @@ class Menu : AppCompatActivity() {
         pupYesno.setCancelable(true)
         pupYesno.window?.setBackgroundDrawableResource(android.R.color.transparent)
         pupYesno.window?.attributes?.windowAnimations = R.style.CustomDialogAnimation
-        pupYesno.window?.attributes?.width = WindowManager.LayoutParams.WRAP_CONTENT
-        pupYesno.window?.attributes?.height = WindowManager.LayoutParams.WRAP_CONTENT
         val yesBtn = bindingPup.pupYesBtn
         val noBtn = bindingPup.pupNoBtn
         bindingPup.pupYesNoDescription.text = getString(R.string.popup_logout)

@@ -6,9 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.app.novatech.R
-import com.app.novatech.databinding.FragmentCollaboratorsBinding
+import com.app.novatech.databinding.FragmentProjectIndividualBinding
 import com.app.novatech.databinding.PopupOkBinding
 import com.app.novatech.databinding.PopupYesnoBinding
 
@@ -19,15 +20,16 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [CollaboratorsFragment.newInstance] factory method to
+ * Use the [ProjectIndividualFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CollaboratorsFragment : Fragment() {
+class ProjectIndividualFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding: FragmentCollaboratorsBinding? = null
+    private var _binding: FragmentProjectIndividualBinding? = null
     private val binding get() = _binding!!
+    private val statusItems = arrayOf("Active", "Inactive", "Completed")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +43,8 @@ class CollaboratorsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCollaboratorsBinding.inflate(inflater, container, false)
+        _binding = FragmentProjectIndividualBinding.inflate(inflater, container, false)
+        setStatusSpinner()
         setEditableTextViews()
         setButton()
         return binding.root
@@ -52,38 +55,66 @@ class CollaboratorsFragment : Fragment() {
         _binding = null
     }
 
+    private fun setStatusSpinner(){
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, statusItems)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.projectIndividualStatus.adapter = adapter
+        binding.projectIndividualStatus.setSelection(statusItems.indexOf("Active"))
+    }
+
     private fun setEditableTextViews(){
-        binding.profileTelephone.setOnClickListener {
-            binding.profileTelephone.visibility = View.GONE
-            binding.profileTelephoneEt.visibility = View.VISIBLE
-            binding.profileBtn.visibility = View.VISIBLE
+        binding.projectIndividualDescription.setOnClickListener {
+            binding.projectIndividualDescription.visibility = View.GONE
+            binding.projectIndividualDescriptionEt.visibility = View.VISIBLE
+            binding.projectIndividualBtn.visibility = View.VISIBLE
         }
-        binding.profileEmail.setOnClickListener {
-            binding.profileEmail.visibility = View.GONE
-            binding.profileEmailEt.visibility = View.VISIBLE
-            binding.profileBtn.visibility = View.VISIBLE
+        binding.projectIndividualBudget.setOnClickListener {
+            binding.projectIndividualBudget.visibility = View.GONE
+            binding.projectIndividualBudgetEt.visibility = View.VISIBLE
+            binding.projectIndividualBtn.visibility = View.VISIBLE
         }
-        binding.profilePassword.setOnClickListener {
-            binding.profilePassword.visibility = View.GONE
-            binding.profileCurrentPasswordEt.visibility = View.VISIBLE
-            binding.profileNewPasswordEt.visibility = View.VISIBLE
-            binding.profileBtn.visibility = View.VISIBLE
+        binding.projectIndividualCoordinator.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                binding.projectIndividualBtn.visibility = View.VISIBLE
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+        binding.projectIndividualStatus.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if(position != statusItems.indexOf("Active")){
+                    binding.projectIndividualBtn.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
         }
     }
 
     private fun unSetEditableTextViews(){
-        binding.profileTelephone.visibility = View.VISIBLE
-        binding.profileTelephoneEt.visibility = View.GONE
-        binding.profileEmail.visibility = View.VISIBLE
-        binding.profileEmailEt.visibility = View.GONE
-        binding.profilePassword.visibility = View.VISIBLE
-        binding.profileCurrentPasswordEt.visibility = View.GONE
-        binding.profileNewPasswordEt.visibility = View.GONE
-        binding.profileBtn.visibility = View.GONE
+        binding.projectIndividualDescription.visibility = View.VISIBLE
+        binding.projectIndividualDescriptionEt.visibility = View.INVISIBLE
+        binding.projectIndividualBudget.visibility = View.VISIBLE
+        binding.projectIndividualBudgetEt.visibility = View.INVISIBLE
+        binding.projectIndividualBtn.visibility = View.GONE
     }
 
     private fun setButton(){
-        binding.profileBtn.setOnClickListener{
+        binding.projectIndividualBtn.setOnClickListener{
             val pupYesno= Dialog(requireContext())
             val bindingPup = PopupYesnoBinding.inflate(layoutInflater)
             pupYesno.setContentView(bindingPup.root)
@@ -92,7 +123,7 @@ class CollaboratorsFragment : Fragment() {
             pupYesno.window?.attributes?.windowAnimations = R.style.CustomDialogAnimation
             val yesBtn = bindingPup.pupYesBtn
             val noBtn = bindingPup.pupNoBtn
-            bindingPup.pupYesNoDescription.text = getString(R.string.popup_yesno_profile)
+            bindingPup.pupYesNoDescription.text = getString(R.string.popup_yesno_project_individual)
             yesBtn.setOnClickListener{
                 unSetEditableTextViews()
                 val pupOk = Dialog(requireContext())
@@ -102,7 +133,7 @@ class CollaboratorsFragment : Fragment() {
                 pupOk.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 pupOk.window?.attributes?.windowAnimations = R.style.CustomDialogAnimation
                 val okBtn = bindingPupOk.pupOkBtn
-                bindingPupOk.pupYesNoDescription.text = getString(R.string.popup_ok_profile)
+                bindingPupOk.pupYesNoDescription.text = getString(R.string.popup_ok_project_individual)
                 okBtn.setOnClickListener{
                     pupOk.dismiss()
                 }
@@ -123,12 +154,12 @@ class CollaboratorsFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment CollaboratorsFragment.
+         * @return A new instance of fragment ProjectIndividualFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            CollaboratorsFragment().apply {
+            ProjectIndividualFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
