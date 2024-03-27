@@ -49,4 +49,5 @@
     <string name="project_individual_task">Tasks</string>
     <string name="popup_yesno_project_individual">Are you sure you want to keep changes?</string>
     <string name="popup_ok_project_individual">Changes saved successfully</string>
+    <string name="popup_ok_login">Invalid username or password. Please try again.</string>
 </resources>
