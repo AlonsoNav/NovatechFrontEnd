@@ -56,4 +56,6 @@
     <string name="collaborators">Collaborators</string>
     <string name="text_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</string>
     <string name="popup_ok_login">Invalid username or password. Please try again.</string>
+    <string name="bar_chart_title">Bar chart</string>
+    <string name="bar_chart_project_title">Project</string>
 </resources>
