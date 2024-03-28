@@ -31,7 +31,7 @@ class Login : AppCompatActivity() {
             LoginController.loginAttempt(binding.loginEmail.text.toString(),
                 binding.loginPassword.text.toString(), this) {
                 if(it.isSuccessful){
-                    Log.i("Json de colaborador", it.body?.string().toString());
+                    Log.i("Json de colaborador", it.body?.string().toString())
                     val intent = Intent(this, Menu::class.java)
                     startActivity(intent)
                 }else{
