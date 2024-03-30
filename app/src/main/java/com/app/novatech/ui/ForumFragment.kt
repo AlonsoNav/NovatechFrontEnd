@@ -5,9 +5,9 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.app.novatech.R
-import com.app.novatech.model.Mensaje
+import com.app.novatech.model.Message
 import com.app.novatech.util.Database
-import com.app.novatech.util.MessagesAdapter
+import com.app.novatech.adapters.MessagesAdapter
 
 class ForumFragment : Fragment() {
 
@@ -38,7 +38,7 @@ class ForumFragment : Fragment() {
             }
         }*/
     }
-    private fun parseJsonToMensajes(jsonData: String?): List<Mensaje> {
+    private fun parseJsonToMensajes(jsonData: String?): List<Message> {
         return emptyList()
     }
 }

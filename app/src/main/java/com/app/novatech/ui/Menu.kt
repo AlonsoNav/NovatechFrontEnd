@@ -18,6 +18,7 @@ class Menu : AppCompatActivity() {
     private val projectIndividualFragment = ProjectIndividualFragment()
     private val forumFragment = ForumFragment()
     private val collaboratorsFragment = CollaboratorsFragment()
+    private val adminsFragment = CollaboratorListFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +58,7 @@ class Menu : AppCompatActivity() {
                 R.id.menu_collaborators -> {
                     if (user != null) {
                         if(user.admin){
-                            // TODO: put the fragment for admins
+                            replaceFragment(adminsFragment)
                         }else {
                             val bundle = Bundle().apply {
                                 putSerializable("user", user)
