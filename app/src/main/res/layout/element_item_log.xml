@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="380dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/round_item"
+    android:padding="12dp"
+    android:layout_marginBottom="14dp">
+
+    <TextView
+        android:id="@+id/item_log_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_log_title"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/item_selected"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_log_approved_by_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="@string/item_log_approved_by"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/item_selected"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_log_title" />
+
+    <TextView
+        android:id="@+id/item_log_approved_by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="3dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/item_selected"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/item_log_approved_by_title"
+        app:layout_constraintTop_toBottomOf="@id/item_log_title" />
+
+    <TextView
+        android:id="@+id/item_log_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/item_log_description"
+        android:fontFamily="@font/roboto_light"
+        android:textColor="@color/item_selected"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_log_approved_by" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_log_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_item"
+        android:backgroundTint="@color/white"
+        android:padding="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/item_log_date_icon"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/date"
+            android:contentDescription="@string/item_log_date_icon" />
+
+        <TextView
+            android:id="@+id/item_log_date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="@string/item_log_date"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/item_selected"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/item_log_date_icon"
+            app:layout_constraintBottom_toBottomOf="@id/item_log_date_icon"
+            app:layout_constraintTop_toTopOf="@id/item_log_date_icon"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

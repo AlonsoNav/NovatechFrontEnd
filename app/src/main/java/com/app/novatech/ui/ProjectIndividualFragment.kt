@@ -29,7 +29,11 @@ class ProjectIndividualFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentProjectIndividualBinding? = null
     private val binding get() = _binding!!
+    private val historyFragment = ProjectLogsFragment()
+    private val resourcesFragment = ProjectResourcesFragment()
+    private val taskFragment = ProjectTaskFragment()
     private val statusItems = arrayOf("Active", "Inactive", "Completed")
+    private lateinit var menu : Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,15 +48,37 @@ class ProjectIndividualFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentProjectIndividualBinding.inflate(inflater, container, false)
+        menu = requireActivity() as Menu
         setStatusSpinner()
         setEditableTextViews()
         setButton()
+        setHistoryBtn()
+        setResourcesBtn()
+        setTasksBtn()
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setTasksBtn(){
+        binding.projectIndividualTask.setOnClickListener{
+            menu.replaceFragment(taskFragment)
+        }
+    }
+
+    private fun setHistoryBtn(){
+        binding.projectIndividualHistory.setOnClickListener{
+            menu.replaceFragment(historyFragment)
+        }
+    }
+
+    private fun setResourcesBtn(){
+        binding.projectIndividualResources.setOnClickListener{
+            menu.replaceFragment(resourcesFragment)
+        }
     }
 
     private fun setStatusSpinner(){
