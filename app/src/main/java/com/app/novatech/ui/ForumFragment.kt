@@ -1,23 +1,50 @@
 package com.app.novatech.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.app.novatech.R
+import com.app.novatech.model.Mensaje
+import com.app.novatech.util.Database
+import com.app.novatech.util.MessagesAdapter
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ForumFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ForumFragment : Fragment() {
+
+    private lateinit var recyclerView: RecyclerView
+    private var mensajeAdapter: MessagesAdapter? = null
+    private val db = Database()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        recyclerView = view.findViewById(R.id.recyclerViewPosts)
+        cargarForoGeneral()
+    }
+
+    private fun cargarForoGeneral() {
+        /*val endpoint = "foros/general" // Asegúrate de que este endpoint sea correcto
+        db.getRequestToApi(endpoint) { response ->
+            if (response.isSuccessful) {
+                val responseData = response.body?.string() // Obtiene el cuerpo de la respuesta como String
+                // Necesitarás convertir `responseData` de JSON a objetos `Mensaje`
+                // Esto depende de cómo estés manejando la serialización JSON. Podrías usar Gson, por ejemplo.
+                val mensajes = parseJsonToMensajes(responseData) // Este método debe ser implementado
+                activity?.runOnUiThread {
+                    mensajeAdapter = MessagesAdapter(mensajes)
+                    recyclerView.adapter = mensajeAdapter
+                }
+            } else {
+                Log.d("ForumFragment", "Error cargando mensajes del foro: ${response.message}")
+            }
+        }*/
+    }
+    private fun parseJsonToMensajes(jsonData: String?): List<Mensaje> {
+        return emptyList()
+    }
+}
+
+
+/*class ForumFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -57,4 +84,4 @@ class ForumFragment : Fragment() {
                 }
             }
     }
-}
+}*/
