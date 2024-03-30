@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="380dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/round_item"
+    android:padding="12dp"
+    android:layout_marginBottom="14dp">
+
+    <TextView
+        android:id="@+id/item_task_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_log_title"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/item_selected"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_task_responsible_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="@string/item_task_responsible"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/item_selected"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_task_name" />
+
+    <TextView
+        android:id="@+id/item_task_responsible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="3dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/item_selected"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/item_task_responsible_title"
+        app:layout_constraintTop_toBottomOf="@id/item_task_name" />
+
+    <TextView
+        android:id="@+id/item_task_description"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/item_log_description"
+        android:fontFamily="@font/roboto_light"
+        android:textColor="@color/item_selected"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_task_responsible" />
+
+    <ImageView
+        android:id="@+id/item_task_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/delete"
+        android:contentDescription="@string/item_task_delete" />
+
+    <ImageView
+        android:id="@+id/item_task_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toStartOf="@id/item_task_delete"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/edit"
+        android:contentDescription="@string/item_task_edit"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_task_story_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_item"
+        android:backgroundTint="@color/white"
+        android:padding="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/item_task_story_points_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_task_story_points"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/item_selected"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

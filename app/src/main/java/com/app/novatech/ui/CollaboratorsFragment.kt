@@ -6,11 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import com.app.novatech.R
 import com.app.novatech.databinding.FragmentCollaboratorsBinding
 import com.app.novatech.databinding.PopupOkBinding
 import com.app.novatech.databinding.PopupYesnoBinding
+import com.app.novatech.model.User
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,8 +40,9 @@ class CollaboratorsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCollaboratorsBinding.inflate(inflater, container, false)
+        setUserData()
         setEditableTextViews()
         setButton()
         return binding.root
@@ -50,6 +51,24 @@ class CollaboratorsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setUserData(){
+        val user = arguments?.getSerializable("user") as? User
+        user?.let {
+            binding.profileName.text = it.nombre
+            binding.profileId.text = it.cedula
+            binding.profileDepartment.text = it.departamento
+            binding.profileEmail.text = it.correo
+            binding.profileEmailEt.hint = it.correo
+            binding.profileTelephone.text = it.telefono
+            binding.profileTelephoneEt.hint = it.telefono
+            if(it.proyecto != null){
+                binding.profileProject.text = it.proyecto.nombre
+            }else{
+                binding.profileProject.text = getString(R.string.free)
+            }
+        }
     }
 
     private fun setEditableTextViews(){

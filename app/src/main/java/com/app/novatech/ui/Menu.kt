@@ -2,7 +2,6 @@ package com.app.novatech.ui
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.app.novatech.R
 import com.app.novatech.databinding.ActivityMenuBinding
 import com.app.novatech.databinding.PopupYesnoBinding
+import com.app.novatech.model.User
 
 class Menu : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
@@ -30,8 +30,20 @@ class Menu : AppCompatActivity() {
             insets
         }
 
+        val user = intent.getSerializableExtra("user") as? User
+
         // Setting the default fragment
-        replaceFragment(collaboratorsFragment)
+        if (user != null) {
+            if(user.admin){
+                // TODO: put the fragment for admins
+            }else {
+                val bundle = Bundle().apply {
+                    putSerializable("user", user)
+                }
+                collaboratorsFragment.arguments = bundle
+                replaceFragment(collaboratorsFragment)
+            }
+        }
         binding.bottomNavigationView.selectedItemId = R.id.menu_collaborators
 
         binding.bottomNavigationView.setOnItemSelectedListener{item ->
@@ -43,7 +55,17 @@ class Menu : AppCompatActivity() {
                     replaceFragment(forumFragment)
                 }
                 R.id.menu_collaborators -> {
-                    replaceFragment(collaboratorsFragment)
+                    if (user != null) {
+                        if(user.admin){
+                            // TODO: put the fragment for admins
+                        }else {
+                            val bundle = Bundle().apply {
+                                putSerializable("user", user)
+                            }
+                            collaboratorsFragment.arguments = bundle
+                            replaceFragment(collaboratorsFragment)
+                        }
+                    }
                 }
                 R.id.menu_logout -> {
                     pup()
@@ -53,7 +75,7 @@ class Menu : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(binding.frameLayout.id, fragment)
             .commit()
