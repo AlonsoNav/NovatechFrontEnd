@@ -12,7 +12,7 @@
         android:textSize="18sp"
         android:textColor="@color/black"
         android:fontFamily="@font/roboto_bold"
-        android:text="Why is 42 the answer of life?" />
+        android:text="Title" />
 
     <TextView
         android:id="@+id/tvPostContent"
@@ -54,17 +54,6 @@
         android:layout_alignParentStart="true"
         android:src="@drawable/star"
         android:contentDescription="Vote"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="8dp" />
-
-    <ImageButton
-        android:id="@+id/btnRespond"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvPostTime"
-        android:layout_toEndOf="@id/btnVote"
-        android:src="@drawable/reply"
-        android:contentDescription="Reply"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="8dp" />
 

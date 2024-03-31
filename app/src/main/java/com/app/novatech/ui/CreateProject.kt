@@ -20,7 +20,7 @@ class CreateProject : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_project)
+        setContentView(R.layout.fragment_create_project)
 
         etName = findViewById(R.id.etName)
         etResources = findViewById(R.id.etResources)

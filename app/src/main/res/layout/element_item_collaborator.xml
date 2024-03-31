@@ -5,7 +5,8 @@
     android:background="@drawable/round_popup_gray"
     android:padding="8dp"
     android:orientation="horizontal"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:layout_marginBottom="8dp">
 
     <LinearLayout
         android:layout_width="245dp"
