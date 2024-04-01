@@ -28,7 +28,7 @@ class CollaboratorRegistrationController {
                     "correo": "$correo",
                     "telefono": "$telefono",
                     "departamento": "$departamento",
-                    "proyecto": $proyectoValue,
+                    "nombreProyecto": $proyectoValue,
                     "contrasena": "$contrasena"
                 }
                 """.trimIndent()

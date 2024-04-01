@@ -5,10 +5,10 @@ import java.io.Serializable
 data class Project(
     val nombre: String,
     val presupuesto: Double,
-    val estado: String,
+    val estado: Estado,
     val descripcion: String,
     val fechaInicio: String,
-    val responsable: String,
+    val responsable: Responsable,
     val tareas: List<Tasks>,
     val cambios: List<Logs>,
     val recursos: List<Resource>,
