@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="640dp"
+    tools:context=".ui.ProjectListFragment">
+
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="2dp"
+            android:padding="16dp"
+            android:src="@drawable/back_blue"
+            android:background="@android:color/transparent" />
+        <TextView
+            android:id="@+id/tvCreateProject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/item_selected"
+            android:gravity="center"
+            android:padding="16dp"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="26sp"
+            android:text="Projects" />
+        <ImageButton
+            android:id="@+id/btnCreate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="320dp"
+            android:background="@android:color/transparent"
+            android:padding="16dp"
+            android:src="@drawable/add" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewProjects"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tvCreateProject"
+            android:padding="8dp"/>
+    </RelativeLayout>
+
+</FrameLayout>
