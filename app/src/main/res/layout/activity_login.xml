@@ -33,58 +33,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/login_email_img"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="505dp"
-        android:src="@drawable/person"
-        android:contentDescription="@string/login_email_img_description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <EditText
         android:id="@+id/login_email"
-        android:layout_width="310dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="496dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="22dp"
         android:autofillHints="emailAddress"
-        android:ems="10"
+        android:drawableEnd="@drawable/person"
+        android:drawableTint="@color/black"
+        android:ems="13"
         android:fontFamily="@font/roboto_light"
         android:hint="@string/login_email"
         android:inputType="textEmailAddress"
         android:maxLength="128"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/login_email_img"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/login_password_img"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="570dp"
-        android:contentDescription="@string/login_password_img_description"
-        android:src="@drawable/password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/login_password"
-        android:layout_width="310dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="564dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="22dp"
         android:autofillHints="password"
-        android:ems="10"
+        android:ems="13"
+        android:drawableEnd="@drawable/password"
         android:fontFamily="@font/roboto_light"
         android:hint="@string/login_password"
         android:inputType="textPassword"
         android:maxLength="64"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/login_password_img"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
