@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="640dp"
+    tools:context=".ui.CreateMeetingFragment">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="2dp"
+            android:padding="16dp"
+            android:src="@drawable/back_blue"
+            android:background="@android:color/transparent" />
+        <TextView
+            android:id="@+id/tvCreateProject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/item_selected"
+            android:gravity="center"
+            android:padding="16dp"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="26sp"
+            android:text="Create Meeting" />
+        <LinearLayout
+            android:id="@+id/llFormContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCreateProject"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <EditText
+                android:id="@+id/etDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:drawableEnd="@drawable/calendar"
+                android:fontFamily="@font/roboto_light"
+                android:maxLength="128"
+                android:hint="Date"
+                android:inputType="text"
+                android:padding="8dp"
+
+                android:textColorHint="@color/item_selected"
+                android:gravity="start"
+                />
+            <EditText
+                android:id="@+id/etTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:textSize="24sp"
+                android:drawableEnd="@drawable/file"
+                android:fontFamily="@font/roboto_light"
+                android:maxLength="128"
+                android:hint="Title"
+                android:textColorHint="@color/item_selected"
+                android:inputType="text"
+                android:gravity="left" />
+            <EditText
+                android:id="@+id/etTopic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:textSize="24sp"
+                android:drawableEnd="@drawable/edit"
+                android:fontFamily="@font/roboto_light"
+                android:maxLength="128"
+                android:hint="Topic"
+                android:textColorHint="@color/item_selected"
+                android:inputType="numberDecimal"
+                android:gravity="left" />
+            <EditText
+                android:id="@+id/etMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:textSize="24sp"
+                android:drawableEnd="@drawable/description"
+                android:fontFamily="@font/roboto_light"
+                android:hint="Medium"
+                android:maxLength="256"
+                android:inputType="text"
+                android:textColorHint="@color/item_selected"
+                android:gravity="left" />
+
+            <Button
+                android:id="@+id/btnAddProject"
+                android:layout_width="240dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="160dp"
+                android:background="@drawable/round_btn"
+                android:fontFamily="@font/roboto"
+                android:text="Add meeting"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</FrameLayout>

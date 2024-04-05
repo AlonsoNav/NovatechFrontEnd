@@ -11,7 +11,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.app.novatech.databinding.FragmentRegisterCollaboratorBinding
 import com.app.novatech.model.Department
+import com.app.novatech.model.Project
 import com.app.novatech.model.Proyecto
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -49,21 +52,39 @@ class CollaboratorRegisterFragment : Fragment() {
                 try {
                     client.newCall(request).execute().use { response ->
                         if (response.isSuccessful) {
-                            listOf(Proyecto("Proyecto Ejemplo", "Activo", 10000.0, "Descripción", "2023-01-01", "Juan Pérez"))
+                            val responseBody = response.body?.string() ?: return@use emptyList<Project>()
+                            Log.d("fetchProyectos", "Respuesta: $responseBody")
+                            val gson = Gson()
+                            val type = object : TypeToken<List<Project>>() {}.type
+                            val proyectosResponse = gson.fromJson<List<Project>>(responseBody, type)
+                            Log.d("fetchProyectos", "Proyectos parseados: ${proyectosResponse.size} encontrados")
+                            proyectosResponse
                         } else {
-                            emptyList<Proyecto>()
+                            Log.e("fetchProyectos", "Respuesta fallida: Código ${response.code}")
+                            emptyList<Project>()
                         }
                     }
                 } catch (e: Exception) {
-                    emptyList<Proyecto>()
+                    Log.e("fetchProyectos", "Excepción durante fetch: ${e.message}", e)
+                    emptyList<Project>()
                 }
             }
 
-            val adapterProyectos = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, proyectos.map { it.nombre })
-            adapterProyectos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spinnerProject.adapter = adapterProyectos
+            Log.d("fetchProyectos", "Procesando proyectos en el hilo UI")
+
+            if (proyectos.isNotEmpty()) {
+                val adapterProyectos = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, proyectos.map { it.nombre })
+                adapterProyectos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.spinnerProject.adapter = adapterProyectos
+                Log.d("fetchProyectos", "Adapter configurado con proyectos")
+            } else {
+                Log.e("fetchProyectos", "La lista de proyectos está vacía después de fetch")
+            }
         }
     }
+
+
+
 
     fun fetchDepartamentos() {
         scope.launch {
@@ -72,7 +93,9 @@ class CollaboratorRegisterFragment : Fragment() {
                 try {
                     client.newCall(request).execute().use { response ->
                         if (response.isSuccessful) {
-                            listOf(Department("Departamento Ejemplo"))
+                            val responseBody = response.body?.string() ?: return@use emptyList<Department>()
+                            val gson = Gson()
+                            gson.fromJson(responseBody, Array<Department>::class.java).toList()
                         } else {
                             emptyList<Department>()
                         }
@@ -88,6 +111,8 @@ class CollaboratorRegisterFragment : Fragment() {
         }
     }
 
+
+
     private fun setButton() {
         binding.btnAddMember.setOnClickListener {
             Log.d(TAG, "Attempting to add member")
@@ -95,15 +120,26 @@ class CollaboratorRegisterFragment : Fragment() {
             val cedula = binding.etId.text.toString()
             val correo = binding.etEmail.text.toString()
             val telefono = binding.etPhone.text.toString()
-            val departamento = binding.etDepartment.text.toString()
+            val departamentoSeleccionado = binding.spinnerDepartment.selectedItem as? Department
             val contrasena = binding.etPassword.text.toString()
 
-            if (nombre.isEmpty() || cedula.isEmpty() || correo.isEmpty() || telefono.isEmpty() || departamento.isEmpty() || contrasena.isEmpty()) {
+            val proyectoSeleccionado = binding.spinnerProject.selectedItem as? Project
+
+            /*if (nombre.isEmpty() || cedula.isEmpty() || correo.isEmpty() || telefono.isEmpty() || departamentoSeleccionado == null || contrasena.isEmpty()) {
                 Log.d(TAG, "Validation failed: Empty fields")
                 showPopupError("Todos los campos son requeridos")
-            } else {
+            } else {*/
+
+                val nombreDepartamento = departamentoSeleccionado?.nombre ?: ""
+                Log.d(TAG, "Departamento seleccionado: $nombreDepartamento")
+
+                val datosParaEnviar = "Nombre: $nombre, Cedula: $cedula, Correo: $correo, Telefono: $telefono, Departamento: $nombreDepartamento, Contraseña: [PROTEGIDA], Proyecto: ${proyectoSeleccionado?.nombre}"
+                Log.d(TAG, "Datos para enviar: $datosParaEnviar")
+
+                val idProyecto = proyectoSeleccionado?.nombre ?: ""
+
                 CollaboratorRegistrationController.registrarColaborador(
-                    nombre, cedula, correo, telefono, departamento, "",
+                    nombre, cedula, correo, telefono, nombreDepartamento, idProyecto,
                     contrasena, requireContext()
                 ) { response, responseBody ->
                     activity?.runOnUiThread {
@@ -117,9 +153,10 @@ class CollaboratorRegisterFragment : Fragment() {
                         }
                     }
                 }
-            }
+            //}
         }
     }
+
 
     private fun showPopupError(message: String) {
         binding.root.post {

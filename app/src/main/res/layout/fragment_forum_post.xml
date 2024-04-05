@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="650dp"
+    tools:context=".ui.ForumCreatePostFragment">
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:padding="16dp"
+        android:src="@drawable/back_blue"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCreatePost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/item_selected"
+        android:gravity="center"
+        android:padding="16dp"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="26sp"
+        android:text="Create Post"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/etMessage"
+        android:layout_width="350dp"
+        android:layout_height="0dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/roboto_light"
+        android:hint="Write your message here..."
+        android:inputType="textMultiLine|textCapSentences"
+        android:gravity="top|start"
+        android:padding="8dp"
+        android:scrollbars="vertical"
+        android:textColorHint="@color/item_selected"
+        android:background="@drawable/round_popup_gray"
+        app:layout_constraintTop_toBottomOf="@id/tvCreatePost"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnAddPost"
+        app:layout_constraintHeight_percent="0.7"/>
+
+    <Button
+        android:id="@+id/btnAddPost"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/round_btn"
+        android:fontFamily="@font/roboto"
+        android:text="Add Post"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
