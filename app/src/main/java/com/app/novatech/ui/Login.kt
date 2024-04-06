@@ -30,30 +30,40 @@ class Login : AppCompatActivity() {
         }
         
         binding.loginBtn.setOnClickListener{
-            LoginController.loginAttempt(binding.loginEmail.text.toString(),
-                binding.loginPassword.text.toString(), this) {
-                if(it.isSuccessful){
+            val pupOk = Dialog(this)
+            val bindingPupOk = PopupOkBinding.inflate(layoutInflater)
+            pupOk.setContentView(bindingPupOk.root)
+            pupOk.setCancelable(true)
+            pupOk.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            pupOk.window?.attributes?.windowAnimations = R.style.CustomDialogAnimation
+            val okBtn = bindingPupOk.pupOkBtn
+            try{
+                LoginController.loginAttempt(binding.loginEmail.text.toString(),
+                    binding.loginPassword.text.toString()) {
                     val jsonObject = JsonParser().parse(it.body?.string()).asJsonObject
-                    val user = Gson().fromJson(jsonObject.getAsJsonObject("colaboradorFinal")
-                        .toString(), User::class.java)
-                    val intent = Intent(this, Menu::class.java)
-                    intent.putExtra("user", user)
-                    startActivity(intent)
-                }else{
-                    runOnUiThread {
-                        val pupOk = Dialog(this)
-                        val bindingPupOk = PopupOkBinding.inflate(layoutInflater)
-                        pupOk.setContentView(bindingPupOk.root)
-                        pupOk.setCancelable(true)
-                        pupOk.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                        pupOk.window?.attributes?.windowAnimations = R.style.CustomDialogAnimation
-                        val okBtn = bindingPupOk.pupOkBtn
-                        bindingPupOk.pupYesNoDescription.text = getString(R.string.popup_ok_login)
-                        okBtn.setOnClickListener{
-                            pupOk.dismiss()
+                    if(it.isSuccessful){
+                        val user = Gson().fromJson(jsonObject.getAsJsonObject("colaboradorFinal")
+                            .toString(), User::class.java)
+                        val intent = Intent(this, Menu::class.java)
+                        intent.putExtra("user", user)
+                        startActivity(intent)
+                    }else{
+                        runOnUiThread {
+                            bindingPupOk.pupYesNoDescription.text = jsonObject.get("message").asString
+                            okBtn.setOnClickListener{
+                                pupOk.dismiss()
+                            }
+                            pupOk.show()
                         }
-                        pupOk.show()
                     }
+                }
+            }catch (e: Exception){
+                runOnUiThread {
+                    bindingPupOk.pupYesNoDescription.text = getString(R.string.failed_server)
+                    okBtn.setOnClickListener{
+                        pupOk.dismiss()
+                    }
+                    pupOk.show()
                 }
             }
         }

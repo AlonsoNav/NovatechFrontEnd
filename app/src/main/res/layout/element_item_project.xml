@@ -1,104 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="380dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/round_popup_gray"
-    android:padding="16dp"
-    android:orientation="vertical">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tvProjectName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Project Name"
-            android:textColor="@color/item_selected"
-            android:textSize="18sp"
-            android:fontFamily="@font/roboto_bold"/>
-        <TextView
-            android:id="@+id/tvStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvProjectName"
-            android:textColor="@color/item_selected"
-            android:text="Status"
-            android:textSize="14sp"
-            android:fontFamily="@font/roboto"/>
-        <LinearLayout
-            android:id="@+id/iconContainer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:orientation="horizontal">
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:src="@drawable/add_person_dark"/>
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:src="@drawable/task_dark"/>
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:src="@drawable/history_dark"/>
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:src="@drawable/info"/>
-        </LinearLayout>
-    </RelativeLayout>
+    android:background="@drawable/round_item"
+    android:padding="12dp"
+    android:layout_marginBottom="14dp">
+
+    <TextView
+        android:id="@+id/item_project_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_log_title"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/item_selected"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_project_responsible_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="@string/item_project_responsible"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/item_selected"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_project_name" />
+
+    <TextView
+        android:id="@+id/item_project_responsible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="4dp"
+        android:fontFamily="@font/roboto"
+        android:text=""
+        android:textColor="@color/item_selected"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/item_project_responsible_title"
+        app:layout_constraintTop_toBottomOf="@id/item_project_name" />
+
+    <TextView
+        android:id="@+id/item_project_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="@string/item_log_approved_by"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/item_selected"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_project_responsible" />
+
+    <ImageView
+        android:id="@+id/item_project_delete"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/delete"
+        android:contentDescription="@string/item_collaborator_delete" />
+
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/item_project_progress_bar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:progress="50"
         android:progressTint="@color/btn_color"
-        android:indeterminateTint="@color/secondary_text"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
-        <ImageView
-            android:id="@+id/imgClock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/clock"
-            android:layout_alignParentStart="true"/>
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/imgClock"
-            android:textColor="@color/item_selected"
-            android:text="10/16/24"
-            android:fontFamily="@font/roboto"
-            android:textSize="14sp"/>
-        <ImageView
-            android:id="@+id/imgCoordinator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/person"
-            android:layout_centerInParent="true"/>
-        <TextView
-            android:id="@+id/tvCoordinatorName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/item_selected"
-            android:layout_toEndOf="@id/imgCoordinator"
-            android:text="Coordinator Name"
-            android:fontFamily="@font/roboto"
-            android:textSize="14sp"/>
-    </RelativeLayout>
-</LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_project_status" />
+</androidx.constraintlayout.widget.ConstraintLayout>

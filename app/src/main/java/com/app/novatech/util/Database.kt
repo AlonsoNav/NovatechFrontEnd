@@ -28,4 +28,45 @@ class Database {
             }
         })
     }
+
+    fun getRequestToApi(endpoint: String, callback: (okhttp3.Response) -> Unit){
+        val client = OkHttpClient()
+
+        val apiUrl =
+            "https://backend-ap.fly.dev/api/$endpoint"
+
+        val request = Request.Builder()
+            .url(apiUrl)
+            .build()
+
+        client.newCall(request).enqueue(object : okhttp3.Callback {
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
+                e.printStackTrace()
+            }
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                callback(response)
+            }
+        })
+    }
+
+    fun deleteRequestToApi(endpoint: String, callback: (okhttp3.Response) -> Unit){
+        val client = OkHttpClient()
+
+        val apiUrl =
+            "https://backend-ap.fly.dev/api/$endpoint"
+
+        val request = Request.Builder()
+            .url(apiUrl)
+            .delete()
+            .build()
+
+        client.newCall(request).enqueue(object : okhttp3.Callback {
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
+                e.printStackTrace()
+            }
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                callback(response)
+            }
+        })
+    }
 }

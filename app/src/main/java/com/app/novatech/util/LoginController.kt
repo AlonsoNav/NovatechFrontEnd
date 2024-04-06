@@ -5,7 +5,7 @@ import android.content.Context
 class LoginController {
     companion object {
         private val db = Database()
-        fun loginAttempt(email: String, password: String, context: Context, callback: (okhttp3.Response) -> Unit){
+        fun loginAttempt(email: String, password: String, callback: (okhttp3.Response) -> Unit){
             val endpoint ="colaboradores/login"
             val json =  """
         {
