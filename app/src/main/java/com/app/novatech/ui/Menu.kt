@@ -14,11 +14,7 @@ import com.app.novatech.model.User
 
 class Menu : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
-    private val projectFragment = ProjectFragment()
-    private val projectIndividualFragment = ProjectIndividualFragment()
     private val forumFragment = ForumFragment()
-    private val collaboratorsFragment = CollaboratorsFragment()
-    private val adminsFragment = CollaboratorListFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +32,9 @@ class Menu : AppCompatActivity() {
         // Setting the default fragment
         if (user != null) {
             if(user.admin){
-                // TODO: put the fragment for admins
+                replaceFragment(CollaboratorsAdminFragment())
             }else {
+                val collaboratorsFragment = CollaboratorsFragment()
                 val bundle = Bundle().apply {
                     putSerializable("user", user)
                 }
@@ -50,7 +47,7 @@ class Menu : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener{item ->
             when (item.itemId){
                 R.id.menu_project -> {
-                    replaceFragment(projectIndividualFragment)
+                    replaceFragment(ProjectFragment())
                 }
                 R.id.menu_forum -> {
                     replaceFragment(forumFragment)
@@ -58,8 +55,9 @@ class Menu : AppCompatActivity() {
                 R.id.menu_collaborators -> {
                     if (user != null) {
                         if(user.admin){
-                            replaceFragment(adminsFragment)
+                            replaceFragment(CollaboratorsAdminFragment())
                         }else {
+                            val collaboratorsFragment = CollaboratorsFragment()
                             val bundle = Bundle().apply {
                                 putSerializable("user", user)
                             }
@@ -79,6 +77,7 @@ class Menu : AppCompatActivity() {
     fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(binding.frameLayout.id, fragment)
+            .addToBackStack(null)
             .commit()
     }
 

@@ -55,7 +55,6 @@
     <string name="budget">Budget</string>
     <string name="collaborators">Collaborators</string>
     <string name="text_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</string>
-    <string name="popup_ok_login">Invalid username or password. Please try again.</string>
     <string name="bar_chart_title">Bar chart</string>
     <string name="bar_chart_project_title">Project</string>
     <string name="free">Free</string>
@@ -91,4 +90,25 @@
     <string name="project_edit_task_title">Edit Task</string>
     <string name="project_edit_task_btn">Edit task</string>
     <string name="project_edit_task_status">Status</string>
+    <string name="collaborators_admin_title">Collaborator\'s list</string>
+    <string name="collaborators_admin_add">Add a collaborator</string>
+    <string name="collaborators_admin_search">Search a collaborator</string>
+    <string name="item_collaborator_delete">Delete collaborator</string>
+    <string name="item_collaborator_edit">Edit collaborator</string>
+    <string name="failed_server">Failed to connect to server</string>
+    <string name="collaborators_add_title">New collaborator</string>
+    <string name="collaborators_add_id">Id</string>
+    <string name="collaborators_add_email">Email</string>
+    <string name="collaborators_add_password">Password</string>
+    <string name="collaborators_add_phone">Phone</string>
+    <string name="collaborators_add_department">Department:</string>
+    <string name="collaborators_add_btn">Add collaborator</string>
+    <string name="collaborators_add_project">Project</string>
+    <string name="department_it">IT</string>
+    <string name="department_admin">Administration</string>
+    <string name="department_accountability">Accountability</string>
+    <string name="projects_title">Projects</string>
+    <string name="projects_add">Add a project</string>
+    <string name="projects_chart">Charts of the projects</string>
+    <string name="item_project_responsible">Responsible:</string>
 </resources>
