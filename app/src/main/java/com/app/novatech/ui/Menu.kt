@@ -14,7 +14,6 @@ import com.app.novatech.model.User
 
 class Menu : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
-    private val forumFragment = ForumFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +49,7 @@ class Menu : AppCompatActivity() {
                     replaceFragment(ProjectFragment())
                 }
                 R.id.menu_forum -> {
-                    replaceFragment(forumFragment)
+                    replaceFragment(ForumFragment())
                 }
                 R.id.menu_collaborators -> {
                     if (user != null) {
