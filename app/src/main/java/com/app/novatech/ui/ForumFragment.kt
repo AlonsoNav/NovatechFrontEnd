@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.app.novatech.R
-import com.app.novatech.databinding.FragmentCollaboratorsAdminBinding
 import com.app.novatech.databinding.FragmentForumBinding
+import com.app.novatech.model.Message
+import com.app.novatech.model.ProjectForList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,22 +21,18 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ForumFragment : Fragment() {
+    private val messagesList = ArrayList<Message>()
     private var _binding: FragmentForumBinding? = null
     private val binding get() = _binding!!
     private lateinit var menu : Menu
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentForumBinding.inflate(inflater, container, false)
+        if(messagesList.isNotEmpty())
+            messagesList.clear()
         menu = requireActivity() as Menu
         setAddBtn()
         return binding.root

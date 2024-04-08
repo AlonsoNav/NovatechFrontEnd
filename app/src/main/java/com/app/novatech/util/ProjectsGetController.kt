@@ -9,5 +9,13 @@ class ProjectsGetController {
                 callback(response)
             }
         }
+
+        fun getColabsAttempt(name: String, callback: (okhttp3.Response) -> Unit) {
+            val endpoint = "proyectos/$name/colab"
+            db.getRequestToApi(endpoint) { response ->
+                callback(response)
+            }
+        }
+
     }
 }

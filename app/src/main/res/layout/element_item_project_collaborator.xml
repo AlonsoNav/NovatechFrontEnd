@@ -39,14 +39,4 @@
         app:srcCompat="@drawable/delete"
         android:contentDescription="@string/item_collaborator_delete" />
 
-    <ImageView
-        android:id="@+id/item_collaborator_edit"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintEnd_toStartOf="@id/item_collaborator_delete"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/edit"
-        android:contentDescription="@string/item_collaborator_edit"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

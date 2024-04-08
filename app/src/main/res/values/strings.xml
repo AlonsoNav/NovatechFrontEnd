@@ -118,4 +118,10 @@
     <string name="projects_add_btn">Add project</string>
     <string name="projects_add_start_date">Start date</string>
     <string name="projects_add_end_date">End date</string>
+    <string name="project_individual_collaborators">Collaborators</string>
+    <string name="project_collaborators_title">Collaborators</string>
+    <string name="add_collaborator">Add Collaborator</string>
+    <string name="burndown_chart_title">Burndown Chart</string>
+    <string name="project_bar_chart_title">Bar Chart</string>
+    <string name="project_burndown_chart_tite">Burndown Chart</string>
 </resources>

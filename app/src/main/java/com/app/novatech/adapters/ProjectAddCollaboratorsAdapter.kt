@@ -16,21 +16,21 @@ import com.app.novatech.databinding.PopupYesnoBinding
 import com.app.novatech.model.Collaborator
 import com.app.novatech.ui.Menu
 
-class ProjectCollaboratorsAdapter(
+class ProjectAddCollaboratorsAdapter(
     private val menu: Menu,
     private val activity: FragmentActivity?,
     private val context: Context,
     private var collaborators: List<Collaborator>
-) : RecyclerView.Adapter<ProjectCollaboratorsAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ProjectAddCollaboratorsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.element_item_project_collaborator, parent, false))
+        ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.element_item_project_add_collaborator, parent, false))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val collaborator = collaborators[position]
         holder.bind(collaborator)
         setAnimation(holder.itemView)
-        holder.itemView.findViewById<ImageView>(R.id.item_collaborator_delete).setOnClickListener {
+        holder.itemView.findViewById<ImageView>(R.id.item_collaborator_add).setOnClickListener {
             showDeleteConfirmationDialog(collaborator, position)
         }
     }

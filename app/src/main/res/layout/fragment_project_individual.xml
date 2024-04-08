@@ -326,5 +326,116 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/project_individual_collaborators"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:paddingHorizontal="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_btn"
+            android:backgroundTint="@color/secondary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/project_individual_task">
+
+            <TextView
+                android:id="@+id/project_individual_collaborators_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/person"
+                android:backgroundTint="@color/item_selected"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/project_individual_collaborators_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/project_individual_collaborators"
+                android:textColor="@color/item_selected"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/project_individual_collaborators_icon"
+                app:layout_constraintStart_toEndOf="@+id/project_individual_collaborators_icon"
+                app:layout_constraintTop_toTopOf="@+id/project_individual_collaborators_icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/project_bar_chart"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:paddingHorizontal="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_btn"
+            android:backgroundTint="@color/secondary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/project_individual_collaborators">
+
+            <TextView
+                android:id="@+id/project_bar_chart_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/chart"
+                android:backgroundTint="@color/item_selected"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/project_bar_chart_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/project_bar_chart_title"
+                android:textColor="@color/item_selected"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/project_bar_chart_icon"
+                app:layout_constraintStart_toEndOf="@+id/project_bar_chart_icon"
+                app:layout_constraintTop_toTopOf="@+id/project_bar_chart_icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/project_burndown_chart"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:paddingHorizontal="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_btn"
+            android:backgroundTint="@color/secondary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/project_bar_chart">
+
+            <TextView
+                android:id="@+id/project_burndown_chart_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/chart"
+                android:backgroundTint="@color/item_selected"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/project_burndown_chart_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/project_burndown_chart_tite"
+                android:textColor="@color/item_selected"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/project_burndown_chart_icon"
+                app:layout_constraintStart_toEndOf="@+id/project_burndown_chart_icon"
+                app:layout_constraintTop_toTopOf="@+id/project_burndown_chart_icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

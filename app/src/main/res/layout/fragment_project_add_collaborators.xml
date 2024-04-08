@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/project_collaborators_back"
+            android:id="@+id/project_add_collaborators_back"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginTop="30dp"
