@@ -18,8 +18,11 @@ import com.app.novatech.model.Collaborator
 import com.app.novatech.util.CollaboratorsDeleteController
 import com.google.gson.JsonParser
 
-class CollaboratorAdapter(private val activity: FragmentActivity?, private val context: Context, private val layoutInflater: LayoutInflater,
-                          private val collaboratorsList: ArrayList<Collaborator>, private val navigateToEdit: (Collaborator) -> Unit)
+class CollaboratorAdapter(private val activity: FragmentActivity?,
+                          private val context: Context,
+                          private val layoutInflater: LayoutInflater,
+                          private val collaboratorsList: ArrayList<Collaborator>,
+                          private val navigateToEdit: (Collaborator) -> Unit)
     : RecyclerView.Adapter<CollaboratorAdapter.MyViewHolder>(), Filterable {
 
     class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
