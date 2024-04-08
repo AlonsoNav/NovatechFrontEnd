@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="380dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/round_item"
+    android:padding="12dp"
+    android:layout_marginBottom="14dp">
+
+    <TextView
+        android:id="@+id/item_collaborator_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_log_title"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/item_selected"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_collaborator_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="@string/item_task_responsible"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/item_selected"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_collaborator_name" />
+
+    <ImageView
+        android:id="@+id/item_collaborator_delete"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/delete"
+        android:contentDescription="@string/item_collaborator_delete" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
