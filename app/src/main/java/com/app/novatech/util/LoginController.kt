@@ -1,7 +1,5 @@
 package com.app.novatech.util
 
-import android.content.Context
-
 class LoginController {
     companion object {
         private val db = Database()

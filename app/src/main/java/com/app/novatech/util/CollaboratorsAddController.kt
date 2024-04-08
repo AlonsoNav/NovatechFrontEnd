@@ -15,7 +15,7 @@ class CollaboratorsAddController {
             "departamento": "$department",
             "telefono": "$phone",
             "contrasena": "$password",
-            "nombreProyecot": "$project"
+            "nombreProyecto": "$project"
         }
     """.trimIndent()
 
