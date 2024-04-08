@@ -2,6 +2,7 @@ package com.app.novatech.ui
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,37 +12,22 @@ import com.app.novatech.databinding.FragmentCollaboratorsBinding
 import com.app.novatech.databinding.PopupOkBinding
 import com.app.novatech.databinding.PopupYesnoBinding
 import com.app.novatech.model.User
+import com.app.novatech.util.CollaboratorsEditController
+import com.app.novatech.util.CollaboratorsGetController
+import com.google.gson.Gson
+import com.google.gson.JsonParser
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CollaboratorsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CollaboratorsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var _binding: FragmentCollaboratorsBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var user : User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCollaboratorsBinding.inflate(inflater, container, false)
+        user = (arguments?.getSerializable("user") as? User)!!
         setUserData()
         setEditableTextViews()
         setButton()
@@ -54,15 +40,14 @@ class CollaboratorsFragment : Fragment() {
     }
 
     private fun setUserData(){
-        val user = arguments?.getSerializable("user") as? User
         user?.let {
             binding.profileName.text = it.nombre
             binding.profileId.text = it.cedula
             binding.profileDepartment.text = it.departamento
             binding.profileEmail.text = it.correo
-            binding.profileEmailEt.hint = it.correo
+            binding.profileEmailEt.setText(it.correo)
             binding.profileTelephone.text = it.telefono
-            binding.profileTelephoneEt.hint = it.telefono
+            binding.profileTelephoneEt.setText(it.telefono)
             if(it.proyecto != null){
                 binding.profileProject.text = it.proyecto.nombre
             }else{
@@ -113,6 +98,17 @@ class CollaboratorsFragment : Fragment() {
             val noBtn = bindingPup.pupNoBtn
             bindingPup.pupYesNoDescription.text = getString(R.string.popup_yesno_profile)
             yesBtn.setOnClickListener{
+                val email = if(binding.profileEmailEt.visibility == View.VISIBLE) binding.profileEmailEt.text.toString() else user.correo
+                val phone = if(binding.profileTelephoneEt.visibility == View.VISIBLE) binding.profileTelephoneEt.text.toString() else user.telefono
+                val password : String
+                val newPassword :  String
+                if(binding.profileCurrentPasswordEt.visibility == View.VISIBLE) {
+                    password = binding.profileCurrentPasswordEt.text.toString()
+                    newPassword = binding.profileNewPasswordEt.text.toString()
+                }else{
+                    password = ""
+                    newPassword = ""
+                }
                 unSetEditableTextViews()
                 val pupOk = Dialog(requireContext())
                 val bindingPupOk = PopupOkBinding.inflate(layoutInflater)
@@ -121,7 +117,36 @@ class CollaboratorsFragment : Fragment() {
                 pupOk.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 pupOk.window?.attributes?.windowAnimations = R.style.CustomDialogAnimation
                 val okBtn = bindingPupOk.pupOkBtn
-                bindingPupOk.pupYesNoDescription.text = getString(R.string.popup_ok_profile)
+                try{
+                    CollaboratorsEditController.editCollaboratorsAttempt(user.cedula,
+                        email,
+                        user.departamento,
+                        phone,
+                        newPassword,
+                        password){
+                        val jsonObject = JsonParser().parse(it.body?.string()).asJsonObject
+                        if(it.isSuccessful){
+                            CollaboratorsGetController.getCollaboratorsAttempt(user.cedula){response ->
+                                val jsonObjectForUser = JsonParser().parse(response.body?.string()).asJsonObject
+                                if(response.isSuccessful) {
+                                    user = Gson().fromJson(
+                                        jsonObjectForUser.toString(),
+                                        User::class.java
+                                    )
+                                    Log.d("user", user.telefono)
+                                }
+                                requireActivity().runOnUiThread {
+                                    setUserData()
+                                }
+                            }
+                        }
+                        requireActivity().runOnUiThread {
+                            bindingPupOk.pupYesNoDescription.text = jsonObject.get("message").asString
+                        }
+                    }
+                }catch(e : Exception){
+                    bindingPupOk.pupYesNoDescription.text = getString(R.string.failed_server)
+                }
                 okBtn.setOnClickListener{
                     pupOk.dismiss()
                 }
@@ -133,25 +158,5 @@ class CollaboratorsFragment : Fragment() {
             }
             pupYesno.show()
         }
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CollaboratorsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CollaboratorsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

@@ -2,6 +2,7 @@ package com.app.novatech.ui
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,21 +13,11 @@ import com.app.novatech.R
 import com.app.novatech.databinding.FragmentProjectIndividualBinding
 import com.app.novatech.databinding.PopupOkBinding
 import com.app.novatech.databinding.PopupYesnoBinding
+import com.app.novatech.model.Project
+import com.app.novatech.util.ProjectsGetController
+import com.google.gson.JsonParser
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProjectIndividualFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProjectIndividualFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var _binding: FragmentProjectIndividualBinding? = null
     private val binding get() = _binding!!
     private val historyFragment = ProjectLogsFragment()
@@ -34,14 +25,7 @@ class ProjectIndividualFragment : Fragment() {
     private val taskFragment = ProjectTaskFragment()
     private val statusItems = arrayOf("Active", "Inactive", "Completed")
     private lateinit var menu : Menu
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var project : Project
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,16 +35,40 @@ class ProjectIndividualFragment : Fragment() {
         menu = requireActivity() as Menu
         setStatusSpinner()
         setEditableTextViews()
-        setButton()
+        getProject(arguments?.getString("name")!!)
+        setBackBtn()
         setHistoryBtn()
         setResourcesBtn()
         setTasksBtn()
+        setButton()
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun getProject(name : String){
+        try{
+            ProjectsGetController.getProjectsAttempt(name) {
+                val jsonObject = JsonParser().parse(it.body?.string()).asJsonObject
+                project = Project(
+                    jsonObject.asJsonObject.get("nombre").asString,
+                    jsonObject.asJsonObject.get("presupuesto").asDouble,
+                    "Active",
+                    jsonObject.asJsonObject.get("descripcion").asString,
+                    jsonObject.asJsonObject.get("fechaInicio").asString,
+                    jsonObject.asJsonObject.get("fechaFin").asString,
+                    "Responsible"
+                )
+                activity?.runOnUiThread {
+                    setProjectData()
+                }
+            }
+        }catch (_: Exception){
+
+        }
     }
 
     private fun setTasksBtn(){
@@ -131,6 +139,23 @@ class ProjectIndividualFragment : Fragment() {
         }
     }
 
+    private fun setProjectData(){
+        binding.projectIndividualName.text = project.nombre
+        binding.projectIndividualStatus.setSelection(statusItems.indexOf(project.estado))
+        binding.projectIndividualDescription.text = project.descripcion
+        binding.projectIndividualDescriptionEt.setText(project.descripcion)
+        binding.projectIndividualBudget.text = project.presupuesto.toString()
+        val date = project.fechaInicio.substring(0,10) + " to " + project.fechaFin.substring(0,10)
+        binding.projectIndividualStartDate.text = date
+        // TODO: set the responsible
+    }
+
+    private fun setBackBtn(){
+        binding.projectIndividualBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+    }
+
     private fun unSetEditableTextViews(){
         binding.projectIndividualDescription.visibility = View.VISIBLE
         binding.projectIndividualDescriptionEt.visibility = View.INVISIBLE
@@ -171,25 +196,5 @@ class ProjectIndividualFragment : Fragment() {
             }
             pupYesno.show()
         }
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProjectIndividualFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProjectIndividualFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

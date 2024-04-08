@@ -156,7 +156,7 @@
                 android:textSize="24sp"
                 android:inputType="phone"
                 android:visibility="gone"
-                android:maxLength="13"
+                android:maxLength="8"
                 app:layout_constraintStart_toEndOf="@id/profile_telephone_icon"
                 app:layout_constraintTop_toTopOf="parent"
                 android:autofillHints="phone" />
@@ -194,7 +194,7 @@
                 android:fontFamily="@font/roboto_light"
                 android:hint="@string/profile_email"
                 android:textSize="24sp"
-                android:maxLength="128"
+                android:maxLength="50"
                 android:inputType="textEmailAddress"
                 android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@id/profile_email_icon"
@@ -236,7 +236,7 @@
                 android:textSize="24sp"
                 android:inputType="textPassword"
                 android:visibility="gone"
-                android:maxLength="64"
+                android:maxLength="16"
                 app:layout_constraintStart_toEndOf="@id/profile_password_icon"
                 app:layout_constraintTop_toTopOf="parent"
                 android:autofillHints="password" />
@@ -252,7 +252,7 @@
                 android:textSize="24sp"
                 android:inputType="textPassword"
                 android:visibility="gone"
-                android:maxLength="64"
+                android:maxLength="16"
                 app:layout_constraintStart_toEndOf="@id/profile_password_icon"
                 app:layout_constraintTop_toTopOf="parent"
                 android:autofillHints="password" />

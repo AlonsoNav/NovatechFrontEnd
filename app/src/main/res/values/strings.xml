@@ -23,9 +23,9 @@
     <string name="profile_id">303330333</string>
     <string name="profile_project">Project name</string>
     <string name="profile_department">Department name</string>
-    <string name="profile_telephone">88888888</string>
-    <string name="profile_email">email@estudiantec.cr</string>
-    <string name="profile_password">********</string>
+    <string name="profile_telephone">Write the new number</string>
+    <string name="profile_email">Write the new email</string>
+    <string name="profile_password">*********</string>
     <string name="popup_yes">Yes</string>
     <string name="popup_no">No</string>
     <string name="popup_ok">OK</string>
@@ -39,7 +39,7 @@
     <string name="project_individual_name">Project name</string>
     <string name="project_individual_start_date">02/04/2024</string>
     <string name="project_individual_description_title">Description</string>
-    <string name="project_individual_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="project_individual_description">Write your project description</string>
     <string name="project_individual_status_title">Status</string>
     <string name="project_individual_coordinator_title">Coordinated by</string>
     <string name="project_individual_budget_title">Budget</string>
@@ -111,4 +111,11 @@
     <string name="projects_add">Add a project</string>
     <string name="projects_chart">Charts of the projects</string>
     <string name="item_project_responsible">Responsible:</string>
+    <string name="projects_add_title">New project</string>
+    <string name="projects_add_budget">Budget</string>
+    <string name="projects_add_description">Description</string>
+    <string name="projects_add_responsible">Responsible:</string>
+    <string name="projects_add_btn">Add project</string>
+    <string name="projects_add_start_date">Start date</string>
+    <string name="projects_add_end_date">End date</string>
 </resources>

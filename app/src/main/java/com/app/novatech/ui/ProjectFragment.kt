@@ -24,6 +24,7 @@ class ProjectFragment : Fragment() {
     private lateinit var adapter: ProjectAdapter
     private var _binding: FragmentProjectBinding? = null
     private val binding get() = _binding!!
+    private lateinit var menu : Menu
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,9 +33,11 @@ class ProjectFragment : Fragment() {
         _binding = FragmentProjectBinding.inflate(inflater, container, false)
         if(projectsList.isNotEmpty())
             projectsList.clear()
+        menu = requireActivity() as Menu
         getProjectsList()
         setRecyclerView()
         setSearchBar()
+        setAddBtn()
         return binding.root
     }
 
@@ -67,7 +70,7 @@ class ProjectFragment : Fragment() {
     }
 
     private fun setRecyclerView(){
-        adapter = ProjectAdapter(projectsList)
+        adapter = ProjectAdapter(menu, activity ,requireContext(), layoutInflater, projectsList)
         binding.projectsRv.layoutManager = LinearLayoutManager(requireContext())
         binding.projectsRv.setHasFixedSize(true)
         binding.projectsRv.adapter = adapter
@@ -85,5 +88,11 @@ class ProjectFragment : Fragment() {
                 return true
             }
         })
+    }
+
+    private fun setAddBtn(){
+        binding.projectsAdd.setOnClickListener {
+            menu.replaceFragment(ProjectAddFragment())
+        }
     }
 }
