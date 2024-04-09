@@ -2,7 +2,6 @@ package com.app.novatech.ui
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -98,16 +97,16 @@ class CollaboratorsFragment : Fragment() {
             val noBtn = bindingPup.pupNoBtn
             bindingPup.pupYesNoDescription.text = getString(R.string.popup_yesno_profile)
             yesBtn.setOnClickListener{
-                val email = if(binding.profileEmailEt.visibility == View.VISIBLE) binding.profileEmailEt.text.toString() else user.correo
-                val phone = if(binding.profileTelephoneEt.visibility == View.VISIBLE) binding.profileTelephoneEt.text.toString() else user.telefono
-                val password : String
-                val newPassword :  String
+                val email = if(binding.profileEmailEt.visibility == View.VISIBLE) binding.profileEmailEt.text.toString() else null
+                val phone = if(binding.profileTelephoneEt.visibility == View.VISIBLE) binding.profileTelephoneEt.text.toString() else null
+                val password : String?
+                val newPassword :  String?
                 if(binding.profileCurrentPasswordEt.visibility == View.VISIBLE) {
                     password = binding.profileCurrentPasswordEt.text.toString()
                     newPassword = binding.profileNewPasswordEt.text.toString()
                 }else{
-                    password = ""
-                    newPassword = ""
+                    password = null
+                    newPassword = null
                 }
                 unSetEditableTextViews()
                 val pupOk = Dialog(requireContext())
@@ -120,7 +119,7 @@ class CollaboratorsFragment : Fragment() {
                 try{
                     CollaboratorsEditController.editCollaboratorsAttempt(user.cedula,
                         email,
-                        user.departamento,
+                        null,
                         phone,
                         newPassword,
                         password){
@@ -133,7 +132,6 @@ class CollaboratorsFragment : Fragment() {
                                         jsonObjectForUser.toString(),
                                         User::class.java
                                     )
-                                    Log.d("user", user.telefono)
                                 }
                                 requireActivity().runOnUiThread {
                                     setUserData()

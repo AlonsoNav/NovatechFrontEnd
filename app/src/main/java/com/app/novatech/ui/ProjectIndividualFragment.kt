@@ -14,7 +14,9 @@ import com.app.novatech.databinding.FragmentProjectIndividualBinding
 import com.app.novatech.databinding.PopupOkBinding
 import com.app.novatech.databinding.PopupYesnoBinding
 import com.app.novatech.model.Project
+import com.app.novatech.util.CollaboratorsGetFreeController
 import com.app.novatech.util.ProjectsGetController
+import com.app.novatech.util.ProjectsListController
 import com.google.gson.JsonParser
 
 class ProjectIndividualFragment : Fragment() {
@@ -26,6 +28,8 @@ class ProjectIndividualFragment : Fragment() {
     private val statusItems = arrayOf("Active", "Inactive", "Completed")
     private lateinit var menu : Menu
     private lateinit var project : Project
+    private lateinit var collaboratorsAdapter: ArrayAdapter<String>
+    private val collaboratorsList = ArrayList<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,8 +37,12 @@ class ProjectIndividualFragment : Fragment() {
     ): View? {
         _binding = FragmentProjectIndividualBinding.inflate(inflater, container, false)
         menu = requireActivity() as Menu
+        if(collaboratorsList.isNotEmpty())
+            collaboratorsList.clear()
         setStatusSpinner()
+        setResponsibleSpinner()
         setEditableTextViews()
+        getCollaboratorsList()
         getProject(arguments?.getString("name")!!)
         setBackBtn()
         setHistoryBtn()
@@ -49,18 +57,43 @@ class ProjectIndividualFragment : Fragment() {
         _binding = null
     }
 
+    private fun setResponsibleSpinner(){
+        collaboratorsAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, collaboratorsList)
+        collaboratorsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.projectIndividualCoordinator.adapter = collaboratorsAdapter
+    }
+
+    private fun getCollaboratorsList(){
+        try{
+            CollaboratorsGetFreeController.getFreeCollaboratorsAttempt {
+                val jsonArray = JsonParser().parse(it.body?.string()).asJsonArray
+                for(jsonObject in jsonArray){
+                    collaboratorsList.add(
+                        jsonObject.asJsonObject.get("correo").asString
+                    )
+                }
+                activity?.runOnUiThread {
+                    collaboratorsAdapter.notifyDataSetChanged()
+                }
+            }
+        }catch (_: Exception){
+
+        }
+    }
+
     private fun getProject(name : String){
         try{
             ProjectsGetController.getProjectsAttempt(name) {
                 val jsonObject = JsonParser().parse(it.body?.string()).asJsonObject
+                Log.d("Proyecto", jsonObject.asJsonObject.toString())
                 project = Project(
                     jsonObject.asJsonObject.get("nombre").asString,
                     jsonObject.asJsonObject.get("presupuesto").asDouble,
-                    "Active",
+                    jsonObject.asJsonObject.get("estado").asString,
                     jsonObject.asJsonObject.get("descripcion").asString,
                     jsonObject.asJsonObject.get("fechaInicio").asString,
                     jsonObject.asJsonObject.get("fechaFin").asString,
-                    "Responsible"
+                    jsonObject.asJsonObject.get("responsable").asString
                 )
                 activity?.runOnUiThread {
                     setProjectData()
@@ -145,9 +178,11 @@ class ProjectIndividualFragment : Fragment() {
         binding.projectIndividualDescription.text = project.descripcion
         binding.projectIndividualDescriptionEt.setText(project.descripcion)
         binding.projectIndividualBudget.text = project.presupuesto.toString()
+        binding.projectIndividualBudgetEt.setText(project.presupuesto.toString())
         val date = project.fechaInicio.substring(0,10) + " to " + project.fechaFin.substring(0,10)
         binding.projectIndividualStartDate.text = date
-        // TODO: set the responsible
+        collaboratorsList.add(0, project.responsable)
+        collaboratorsAdapter.notifyDataSetChanged()
     }
 
     private fun setBackBtn(){

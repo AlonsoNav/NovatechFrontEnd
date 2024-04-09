@@ -52,11 +52,12 @@ class ProjectFragment : Fragment() {
                 val jsonArray = JsonParser().parse(it.body?.string()).asJsonArray
                 val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
                 format.timeZone = TimeZone.getTimeZone("UTC")
+                Log.d("proyectos", jsonArray.toString())
                 for(jsonObject in jsonArray){
                     projectsList.add(ProjectForList(
                         jsonObject.asJsonObject.get("nombre").asString,
-                        "example@example.cr", // TODO: get the responsible and status correctly
-                        "Active",
+                        jsonObject.asJsonObject.get("responsable").asString,
+                        jsonObject.asJsonObject.get("estado").asString,
                         format.parse(jsonObject.asJsonObject.get("fechaInicio").asString)!!,
                         format.parse(jsonObject.asJsonObject.get("fechaFin").asString)!!))
                 }
