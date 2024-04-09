@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.app.novatech.R
 import com.app.novatech.adapters.CollaboratorAdapter
 import com.app.novatech.databinding.FragmentCollaboratorsAdminBinding
 import com.app.novatech.model.Collaborator
@@ -59,7 +60,7 @@ class CollaboratorsAdminFragment : Fragment() {
     }
 
     private fun setRecyclerView(){
-        adapter = CollaboratorAdapter(activity ,requireContext(), layoutInflater, collaboratorsList)
+        adapter = CollaboratorAdapter(activity ,requireContext(), layoutInflater, collaboratorsList, this::navigateToCollaboratorEdit )
         binding.collaboratorsAdminRv.layoutManager = LinearLayoutManager(requireContext())
         binding.collaboratorsAdminRv.setHasFixedSize(true)
         binding.collaboratorsAdminRv.adapter = adapter
@@ -84,4 +85,13 @@ class CollaboratorsAdminFragment : Fragment() {
             menu.replaceFragment(CollaboratorsAddFragment())
         }
     }
+
+    fun navigateToCollaboratorEdit(collaborator: Collaborator) {
+        val fragment = CollaboratorsEditFragment()
+        val args = Bundle()
+        fragment.arguments = args
+        args.putSerializable("collaborator", collaborator)
+        menu.replaceFragment(fragment)
+    }
+
 }

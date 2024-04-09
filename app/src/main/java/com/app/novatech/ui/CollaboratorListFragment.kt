@@ -19,8 +19,8 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class ColaboradorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val tvName: TextView = view.findViewById(R.id.tvName)
-    val tvEmail: TextView = view.findViewById(R.id.tvEmail)
+    val tvName: TextView = view.findViewById(R.id.etName)
+    val tvEmail: TextView = view.findViewById(R.id.etEmail)
     val btnDelete: ImageButton = view.findViewById(R.id.btnDelete)
 }
 
@@ -46,11 +46,7 @@ class CollaboratorListFragment : Fragment() {
 
     }
     private fun cargarColaboradores() {
-        CoroutineScope(Dispatchers.Main).launch {
-            val colaboradores = CollaboratorController.obtenerColaboradores()
-            binding.recyclerViewCollaborators.layoutManager = LinearLayoutManager(context)
-            binding.recyclerViewCollaborators.adapter = CollaboratorListAdapter(colaboradores)
-        }
+
     }
 
 

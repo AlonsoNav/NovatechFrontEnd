@@ -25,6 +25,8 @@ class ProjectIndividualFragment : Fragment() {
     private val historyFragment = ProjectLogsFragment()
     private val resourcesFragment = ProjectResourcesFragment()
     private val taskFragment = ProjectTaskFragment()
+    private val meetingsFragment = ProjectMeetingsFragment()
+    private val collaboratorsFragment = ProjectCollaboratorsFragment()
     private val statusItems = arrayOf("Active", "Inactive", "Completed")
     private lateinit var menu : Menu
     private lateinit var project : Project
@@ -47,7 +49,12 @@ class ProjectIndividualFragment : Fragment() {
         setBackBtn()
         setHistoryBtn()
         setResourcesBtn()
+        setMeetingsBtn()
         setTasksBtn()
+        setCollaboratorsBtn()
+        setAddBtn()
+        setBarChartBtn()
+        setBurndownChartBtn()
         setButton()
         return binding.root
     }
@@ -119,6 +126,38 @@ class ProjectIndividualFragment : Fragment() {
     private fun setResourcesBtn(){
         binding.projectIndividualResources.setOnClickListener{
             menu.replaceFragment(resourcesFragment)
+        }
+    }
+
+    private fun setMeetingsBtn(){
+        binding.projectIndividualMeeting.setOnClickListener{
+            menu.replaceFragment(meetingsFragment)
+        }
+    }
+
+    private fun setBarChartBtn(){
+        binding.projectBarChart.setOnClickListener{
+            menu.replaceFragment(ProjectBarChartFragment())
+        }
+    }
+
+    private fun setBurndownChartBtn(){
+        binding.projectBurndownChart.setOnClickListener{
+            menu.replaceFragment(ProjectBurndownChartFragment())
+        }
+    }
+
+    private fun setAddBtn(){
+        binding.projectIndividualAddPerson.setOnClickListener{
+            menu.replaceFragment(ProjectAddCollaboratorsFragment())
+        }
+    }
+
+    private fun setCollaboratorsBtn(){
+        binding.projectIndividualCollaborators.setOnClickListener{
+            val projectName = project.nombre
+            val collaboratorsFragment = ProjectCollaboratorsFragment.newInstance(projectName)
+            menu.replaceFragment(collaboratorsFragment)
         }
     }
 
