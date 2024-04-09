@@ -43,7 +43,7 @@
     <string name="project_individual_status_title">Status</string>
     <string name="project_individual_coordinator_title">Coordinated by</string>
     <string name="project_individual_budget_title">Budget</string>
-    <string name="project_individual_budget">$1000</string>
+    <string name="project_individual_budget">Write the budget of your project</string>
     <string name="project_individual_resources">Resources</string>
     <string name="project_individual_meeting">Meetings</string>
     <string name="project_individual_task">Tasks</string>

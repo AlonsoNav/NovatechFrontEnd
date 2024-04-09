@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import com.app.novatech.databinding.FragmentProjectAddBinding
+import com.app.novatech.util.CollaboratorsGetFreeController
+import com.google.gson.JsonParser
 import java.util.Calendar
 
 class ProjectAddFragment : Fragment() {
@@ -14,12 +17,16 @@ class ProjectAddFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var datePickerDialogStartDate : DatePickerDialog
     private lateinit var datePickerDialogEndDate : DatePickerDialog
+    private lateinit var collaboratorsAdapter: ArrayAdapter<String>
+    private val collaboratorsList = ArrayList<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentProjectAddBinding.inflate(inflater, container, false)
+        getCollaboratorsList()
+        setResponsibleSpinner()
         setDatePickers()
         setBackBtn()
         return binding.root
@@ -28,6 +35,30 @@ class ProjectAddFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun getCollaboratorsList(){
+        try{
+            CollaboratorsGetFreeController.getFreeCollaboratorsAttempt {
+                val jsonArray = JsonParser().parse(it.body?.string()).asJsonArray
+                for(jsonObject in jsonArray){
+                    collaboratorsList.add(
+                        jsonObject.asJsonObject.get("correo").asString
+                    )
+                }
+                activity?.runOnUiThread {
+                    collaboratorsAdapter.notifyDataSetChanged()
+                }
+            }
+        }catch (_: Exception){
+
+        }
+    }
+
+    private fun setResponsibleSpinner(){
+        collaboratorsAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, collaboratorsList)
+        collaboratorsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.projectsAddResponsible.adapter = collaboratorsAdapter
     }
 
     private fun setDatePickers(){

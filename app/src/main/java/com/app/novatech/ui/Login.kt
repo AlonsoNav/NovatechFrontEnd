@@ -3,7 +3,6 @@ package com.app.novatech.ui
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -42,7 +41,6 @@ class Login : AppCompatActivity() {
                 LoginController.loginAttempt(binding.loginEmail.text.toString(),
                     binding.loginPassword.text.toString()) {
                     val jsonObject = JsonParser().parse(it.body?.string()).asJsonObject
-                    Log.d("colaborador", jsonObject.asJsonObject.toString())
                     if(it.isSuccessful){
                         val user = Gson().fromJson(jsonObject.getAsJsonObject("colaboradorFinal")
                             .toString(), User::class.java)
