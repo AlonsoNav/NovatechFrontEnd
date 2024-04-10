@@ -13,7 +13,6 @@ class LogAdapter (private val logList : ArrayList<Logs>) : RecyclerView.Adapter<
         val title : TextView = itemView.findViewById(R.id.item_log_title)
         val description : TextView = itemView.findViewById(R.id.item_log_description)
         val date : TextView = itemView.findViewById(R.id.item_log_date_text)
-        val approvedBy : TextView = itemView.findViewById(R.id.item_log_approved_by)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -29,7 +28,6 @@ class LogAdapter (private val logList : ArrayList<Logs>) : RecyclerView.Adapter<
         val currentItem = logList[position]
         holder.title.text = currentItem.title
         holder.date.text = currentItem.date
-        holder.approvedBy.text = currentItem.approvedby
         holder.description.text = currentItem.description
     }
 }

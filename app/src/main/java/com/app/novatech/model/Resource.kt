@@ -6,4 +6,4 @@ data class Resource(
     val name: String,
     val description: String,
     val type: String
-) : Serializable
+)

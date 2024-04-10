@@ -5,6 +5,5 @@ import java.io.Serializable
 data class Logs(
     val title: String,
     val description: String,
-    val date: String,
-    val approvedby: String
-) : Serializable
+    val date: String
+)
