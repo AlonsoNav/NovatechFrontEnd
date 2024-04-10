@@ -28,7 +28,9 @@ class ProjectAdapter (private val menu: Menu,
                       private val activity: FragmentActivity?,
                       private val context: Context,
                       private val layoutInflater: LayoutInflater,
-                      private val projectsList: ArrayList<ProjectForList>)
+                      private val projectsList: ArrayList<ProjectForList>,
+                      private val isAdmin: Boolean,
+                      private val user: String)
     : RecyclerView.Adapter<ProjectAdapter.MyViewHolder>(), Filterable{
     class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val layout : ConstraintLayout = itemView.findViewById(R.id.item_project)
@@ -47,6 +49,8 @@ class ProjectAdapter (private val menu: Menu,
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        if(!isAdmin)
+            holder.delete.visibility = View.GONE
         val currentItem = filteredList[position]
         holder.name.text = currentItem.name
         holder.responsible.text = currentItem.responsible
@@ -61,6 +65,8 @@ class ProjectAdapter (private val menu: Menu,
             val projectIndividualFragment = ProjectIndividualFragment()
             val bundle = Bundle().apply {
                 putString("name", currentItem.name)
+                putBoolean("isAdmin", isAdmin)
+                putString("user", user)
             }
             projectIndividualFragment.arguments = bundle
             menu.replaceFragment(projectIndividualFragment)

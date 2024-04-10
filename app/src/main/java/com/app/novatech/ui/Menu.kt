@@ -46,7 +46,12 @@ class Menu : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener{item ->
             when (item.itemId){
                 R.id.menu_project -> {
-                    replaceFragment(ProjectFragment())
+                    val projectFragment = ProjectFragment()
+                    val bundle = Bundle().apply {
+                        putSerializable("user", user)
+                    }
+                    projectFragment.arguments = bundle
+                    replaceFragment(projectFragment)
                 }
                 R.id.menu_forum -> {
                     replaceFragment(ForumFragment())
