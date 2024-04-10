@@ -9,32 +9,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.novatech.adapters.LogAdapter
 import com.app.novatech.databinding.FragmentProjectLogsBinding
 import com.app.novatech.model.Logs
+import com.app.novatech.model.Resource
+import com.app.novatech.util.LogsGetController
+import com.app.novatech.util.ResourcesGetController
+import com.google.gson.JsonParser
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProjectLogsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProjectLogsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private lateinit var logList: ArrayList<Logs>
+    private val logList = ArrayList<Logs>()
     private var _binding: FragmentProjectLogsBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var adapter: LogAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +26,8 @@ class ProjectLogsFragment : Fragment() {
     ): View? {
         _binding = FragmentProjectLogsBinding.inflate(inflater, container, false)
         setRecyclerView()
+        getProjectLogs()
+        setBackBtn()
         return binding.root
     }
 
@@ -50,31 +36,38 @@ class ProjectLogsFragment : Fragment() {
         _binding = null
     }
 
+    private fun getProjectLogs(){
+        try{
+            LogsGetController.getLogsAttempt(arguments?.getString("name")!!) {
+                val jsonArray = JsonParser().parse(it.body?.string()).asJsonArray
+                for(jsonObject in jsonArray){
+                    logList.add(
+                        Logs(
+                        jsonObject.asJsonObject.get("nombre").asString,
+                        jsonObject.asJsonObject.get("descripcion").asString,
+                        jsonObject.asJsonObject.get("fecha").asString.substring(0, 10),
+                        )
+                    )
+                }
+                activity?.runOnUiThread {
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }catch(_: Exception){
+
+        }
+    }
+
     private fun setRecyclerView(){
-        logList = arrayListOf(Logs("Title1", "Description1", "11/11/24", "User1"),
-            Logs("Title2", "Description2", "11/11/24", "User2"))
+        adapter = LogAdapter(logList)
         binding.projectLogRv.layoutManager = LinearLayoutManager(requireContext())
         binding.projectLogRv.setHasFixedSize(true)
         binding.projectLogRv.adapter = LogAdapter(logList)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProjectLogsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProjectLogsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun setBackBtn(){
+        binding.projectLogBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 }

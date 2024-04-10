@@ -7,14 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.app.novatech.R
 import com.app.novatech.databinding.PopupOkBinding
 import com.app.novatech.databinding.PopupYesnoBinding
 import com.app.novatech.model.Resource
+import com.app.novatech.util.CollaboratorsDeleteController
+import com.app.novatech.util.ResourcesDeleteController
+import com.google.gson.JsonParser
 
 class ResourceAdapter (private val context: Context, private val layoutInflater: LayoutInflater,
-                       private val resourceList : ArrayList<Resource>) : RecyclerView.Adapter<ResourceAdapter.MyViewHolder>(){
+                       private val resourceList : ArrayList<Resource>,
+                       private val isAdmin: Boolean,
+                       private val projectName: String,
+                       private val activity: FragmentActivity?) : RecyclerView.Adapter<ResourceAdapter.MyViewHolder>(){
     class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val title : TextView = itemView.findViewById(R.id.item_resource_title)
         val description : TextView = itemView.findViewById(R.id.item_resource_description)
@@ -36,6 +43,8 @@ class ResourceAdapter (private val context: Context, private val layoutInflater:
         holder.title.text = currentItem.name
         holder.description.text = currentItem.description
         holder.type.text = currentItem.type
+        if(!isAdmin)
+            holder.delete.visibility = View.GONE
         holder.delete.setOnClickListener {
             setDeleteBtn(currentItem, position)
         }
@@ -52,8 +61,6 @@ class ResourceAdapter (private val context: Context, private val layoutInflater:
         val noBtn = bindingPup.pupNoBtn
         bindingPup.pupYesNoDescription.text = context.getString(R.string.popup_yesno_project_resources_delete, currentItem.name)
         yesBtn.setOnClickListener{
-            resourceList.removeAt(position)
-            notifyItemRemoved(position)
             val pupOk = Dialog(context)
             val bindingPupOk = PopupOkBinding.inflate(layoutInflater)
             pupOk.setContentView(bindingPupOk.root)
@@ -61,7 +68,20 @@ class ResourceAdapter (private val context: Context, private val layoutInflater:
             pupOk.window?.setBackgroundDrawableResource(android.R.color.transparent)
             pupOk.window?.attributes?.windowAnimations = R.style.CustomDialogAnimation
             val okBtn = bindingPupOk.pupOkBtn
-            bindingPupOk.pupYesNoDescription.text = context.getString(R.string.popup_ok_project_resources_delete, currentItem.name)
+            try{
+                ResourcesDeleteController.deleteResourcesAttempt(projectName, currentItem.name) {
+                    val jsonObject = JsonParser().parse(it.body?.string()).asJsonObject
+                    if(it.isSuccessful){
+                        resourceList.removeAt(position)
+                        notifyItemRemoved(position)
+                    }
+                    activity?.runOnUiThread {
+                        bindingPupOk.pupYesNoDescription.text = jsonObject.get("message").asString
+                    }
+                }
+            }catch(e: Exception){
+                bindingPupOk.pupYesNoDescription.text = context.getString(R.string.failed_server)
+            }
             okBtn.setOnClickListener{
                 pupOk.dismiss()
             }

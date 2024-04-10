@@ -19,30 +19,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/item_log_approved_by_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:text="@string/item_log_approved_by"
-        android:fontFamily="@font/roboto"
-        android:textColor="@color/item_selected"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/item_log_title" />
-
-    <TextView
-        android:id="@+id/item_log_approved_by"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginStart="3dp"
-        android:fontFamily="@font/roboto"
-        android:textColor="@color/item_selected"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/item_log_approved_by_title"
-        app:layout_constraintTop_toBottomOf="@id/item_log_title" />
-
-    <TextView
         android:id="@+id/item_log_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +28,7 @@
         android:textColor="@color/item_selected"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/item_log_approved_by" />
+        app:layout_constraintTop_toBottomOf="@id/item_log_date" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_log_date"
