@@ -27,6 +27,7 @@ class ProjectTaskListFragment : Fragment() {
     private lateinit var filterTasksList: ArrayList<Tasks>
     private var _binding: FragmentProjectTaskListBinding? = null
     private val binding get() = _binding!!
+    private lateinit var menu : Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,7 @@ class ProjectTaskListFragment : Fragment() {
         arguments?.let{
             filterTasksList = it.getParcelableArrayList("taskList")!!
         }
+        menu = requireActivity() as Menu
         setRecyclerView()
         return binding.root
     }
@@ -56,7 +58,7 @@ class ProjectTaskListFragment : Fragment() {
     private fun setRecyclerView(){
         binding.projectTaskRv.layoutManager = LinearLayoutManager(requireContext())
         binding.projectTaskRv.setHasFixedSize(true)
-        binding.projectTaskRv.adapter = TaskAdapter(filterTasksList)
+        binding.projectTaskRv.adapter = TaskAdapter(menu, filterTasksList)
     }
 
     companion object {

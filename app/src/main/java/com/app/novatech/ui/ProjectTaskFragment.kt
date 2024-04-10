@@ -26,6 +26,7 @@ class ProjectTaskFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentProjectTaskBinding? = null
     private val binding get() = _binding!!
+    private lateinit var menu : Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +41,8 @@ class ProjectTaskFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentProjectTaskBinding.inflate(inflater, container, false)
+        menu = requireActivity() as Menu
+        setAddBtn()
         setViewPager()
         return binding.root
     }
@@ -64,6 +67,12 @@ class ProjectTaskFragment : Fragment() {
                 else -> "Unknown"
             }
         }.attach()
+    }
+
+    private fun setAddBtn(){
+        binding.projectTaskAddBtn.setOnClickListener {
+            menu.replaceFragment(ProjectAddTaskFragment())
+        }
     }
 
     companion object {

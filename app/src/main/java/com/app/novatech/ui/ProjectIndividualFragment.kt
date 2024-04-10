@@ -51,10 +51,7 @@ class ProjectIndividualFragment : Fragment() {
         setResourcesBtn()
         setMeetingsBtn()
         setTasksBtn()
-        setCollaboratorsBtn()
         setAddBtn()
-        setBarChartBtn()
-        setBurndownChartBtn()
         setButton()
         return binding.root
     }
@@ -135,29 +132,9 @@ class ProjectIndividualFragment : Fragment() {
         }
     }
 
-    private fun setBarChartBtn(){
-        binding.projectBarChart.setOnClickListener{
-            menu.replaceFragment(ProjectBarChartFragment())
-        }
-    }
-
-    private fun setBurndownChartBtn(){
-        binding.projectBurndownChart.setOnClickListener{
-            menu.replaceFragment(ProjectBurndownChartFragment())
-        }
-    }
-
     private fun setAddBtn(){
         binding.projectIndividualAddPerson.setOnClickListener{
             menu.replaceFragment(ProjectAddCollaboratorsFragment())
-        }
-    }
-
-    private fun setCollaboratorsBtn(){
-        binding.projectIndividualCollaborators.setOnClickListener{
-            val projectName = project.nombre
-            val collaboratorsFragment = ProjectCollaboratorsFragment.newInstance(projectName)
-            menu.replaceFragment(collaboratorsFragment)
         }
     }
 
