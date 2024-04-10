@@ -2,6 +2,7 @@ package com.app.novatech.adapters
 
 import android.app.Dialog
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,9 @@ import com.app.novatech.R
 import com.app.novatech.databinding.PopupOkBinding
 import com.app.novatech.databinding.PopupYesnoBinding
 import com.app.novatech.model.Collaborator
+import com.app.novatech.ui.CollaboratorsEditFragment
+import com.app.novatech.ui.Menu
+import com.app.novatech.ui.ProjectIndividualFragment
 import com.app.novatech.util.CollaboratorsDeleteController
 import com.google.gson.JsonParser
 
@@ -22,7 +26,7 @@ class CollaboratorAdapter(private val activity: FragmentActivity?,
                           private val context: Context,
                           private val layoutInflater: LayoutInflater,
                           private val collaboratorsList: ArrayList<Collaborator>,
-                          private val navigateToEdit: (Collaborator) -> Unit)
+                          private val menu: Menu)
     : RecyclerView.Adapter<CollaboratorAdapter.MyViewHolder>(), Filterable {
 
     class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
@@ -57,7 +61,12 @@ class CollaboratorAdapter(private val activity: FragmentActivity?,
 
 
     private fun setEditBtn(currentItem : Collaborator){
-        navigateToEdit(currentItem)
+        val collaboratorsEditFragment = CollaboratorsEditFragment()
+        val bundle = Bundle().apply {
+            putString("id", currentItem.id)
+        }
+        collaboratorsEditFragment.arguments = bundle
+        menu.replaceFragment(collaboratorsEditFragment)
     }
 
     private fun setDeleteBtn(currentItem : Collaborator, position: Int){

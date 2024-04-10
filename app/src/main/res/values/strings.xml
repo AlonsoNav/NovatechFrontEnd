@@ -124,4 +124,6 @@
     <string name="burndown_chart_title">Burndown Chart</string>
     <string name="project_bar_chart_title">Bar Chart</string>
     <string name="project_burndown_chart_tite">Burndown Chart</string>
+    <string name="collaborators_edit_title">Edit collaborator</string>
+    <string name="collaborators_edit_password">Write the new password</string>
 </resources>

@@ -27,6 +27,7 @@ class ProjectResourcesFragment : Fragment() {
     private lateinit var resourceList: ArrayList<Resource>
     private var _binding: FragmentProjectResourcesBinding? = null
     private val binding get() = _binding!!
+    private lateinit var menu : Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +42,8 @@ class ProjectResourcesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentProjectResourcesBinding.inflate(inflater, container, false)
+        menu = requireActivity() as Menu
+        setAddBtn()
         setRecyclerView()
         return binding.root
     }
@@ -57,6 +60,12 @@ class ProjectResourcesFragment : Fragment() {
         binding.projectResourcesRv.layoutManager = LinearLayoutManager(requireContext())
         binding.projectResourcesRv.setHasFixedSize(true)
         binding.projectResourcesRv.adapter = ResourceAdapter(requireContext(), layoutInflater, resourceList)
+    }
+
+    private fun setAddBtn(){
+        binding.projectResourcesAdd.setOnClickListener {
+            menu.replaceFragment(ProjectAddResourceFragment())
+        }
     }
 
     companion object {
