@@ -15,6 +15,8 @@ import com.app.novatech.databinding.PopupOkBinding
 import com.app.novatech.databinding.PopupYesnoBinding
 import com.app.novatech.model.Project
 import com.app.novatech.util.CollaboratorsGetFreeController
+import com.app.novatech.util.ProjectsAddController
+import com.app.novatech.util.ProjectsEditController
 import com.app.novatech.util.ProjectsGetController
 import com.app.novatech.util.ProjectsListController
 import com.google.gson.JsonParser
@@ -32,6 +34,9 @@ class ProjectIndividualFragment : Fragment() {
     private lateinit var project : Project
     private lateinit var collaboratorsAdapter: ArrayAdapter<String>
     private val collaboratorsList = ArrayList<String>()
+    private var status: String? = null
+    private var responsible: String? = null
+    private var isCreated = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +48,6 @@ class ProjectIndividualFragment : Fragment() {
             collaboratorsList.clear()
         setStatusSpinner()
         setResponsibleSpinner()
-        setEditableTextViews()
         getCollaboratorsList()
         getProject(arguments?.getString("name")!!)
         setBackBtn()
@@ -101,6 +105,16 @@ class ProjectIndividualFragment : Fragment() {
                 )
                 activity?.runOnUiThread {
                     setProjectData()
+                    if(!arguments?.getBoolean("isAdmin")!!){
+                        binding.projectIndividualCoordinator.isEnabled = false
+                        binding.projectIndividualStatus.isEnabled = false
+                    }
+                    if(arguments?.getBoolean("isAdmin")!! or
+                        (arguments?.getString("user")!!
+                                == jsonObject.asJsonObject.get("responsable").asString)){
+                        binding.projectIndividualStatus.isEnabled = true
+                        setEditableTextViews()
+                    }
                 }
             }
         }catch (_: Exception){
@@ -162,8 +176,9 @@ class ProjectIndividualFragment : Fragment() {
                 view: View?,
                 position: Int,
                 id: Long
-            ) {
-                binding.projectIndividualBtn.visibility = View.VISIBLE
+            ){
+                if(position != collaboratorsList.indexOf(project.responsable))
+                    binding.projectIndividualBtn.visibility = View.VISIBLE
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -177,7 +192,7 @@ class ProjectIndividualFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if(position != statusItems.indexOf("Active")){
+                if(position != statusItems.indexOf(project.estado)){
                     binding.projectIndividualBtn.visibility = View.VISIBLE
                 }
             }
@@ -197,8 +212,12 @@ class ProjectIndividualFragment : Fragment() {
         binding.projectIndividualBudgetEt.setText(project.presupuesto.toString())
         val date = project.fechaInicio.substring(0,10) + " to " + project.fechaFin.substring(0,10)
         binding.projectIndividualStartDate.text = date
-        collaboratorsList.add(0, project.responsable)
-        collaboratorsAdapter.notifyDataSetChanged()
+        if(!isCreated){
+            collaboratorsList.add(0, project.responsable)
+            collaboratorsAdapter.notifyDataSetChanged()
+            isCreated = true
+        }
+        binding.projectIndividualCoordinator.setSelection(collaboratorsList.indexOf(project.responsable))
     }
 
     private fun setBackBtn(){
@@ -235,7 +254,24 @@ class ProjectIndividualFragment : Fragment() {
                 pupOk.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 pupOk.window?.attributes?.windowAnimations = R.style.CustomDialogAnimation
                 val okBtn = bindingPupOk.pupOkBtn
-                bindingPupOk.pupYesNoDescription.text = getString(R.string.popup_ok_project_individual)
+                val budget = if(binding.projectIndividualBudgetEt.visibility == View.VISIBLE) binding.projectIndividualBudgetEt.text.toString().toDouble() else null
+                val description = if(binding.projectIndividualDescriptionEt.visibility == View.VISIBLE) binding.projectIndividualDescriptionEt.text.toString() else null
+                try{
+                    ProjectsEditController.projectsEditAttempt(project.nombre,
+                        budget,
+                        description,
+                        status,
+                        responsible){
+                        val jsonObject = JsonParser().parse(it.body?.string()).asJsonObject
+                        if(it.isSuccessful)
+                            getProject(project.nombre)
+                        activity?.runOnUiThread {
+                            bindingPupOk.pupYesNoDescription.text = jsonObject.get("message").asString
+                        }
+                    }
+                }catch (e : Exception){
+                    bindingPupOk.pupYesNoDescription.text = getString(R.string.failed_server)
+                }
                 okBtn.setOnClickListener{
                     pupOk.dismiss()
                 }

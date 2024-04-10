@@ -1,16 +1,21 @@
 package com.app.novatech.ui
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import com.app.novatech.R
 import com.app.novatech.databinding.FragmentProjectAddBinding
+import com.app.novatech.databinding.PopupOkBinding
 import com.app.novatech.util.CollaboratorsGetFreeController
+import com.app.novatech.util.ProjectsAddController
 import com.google.gson.JsonParser
 import java.util.Calendar
+import java.util.Locale
 
 class ProjectAddFragment : Fragment() {
     private var _binding: FragmentProjectAddBinding? = null
@@ -29,6 +34,7 @@ class ProjectAddFragment : Fragment() {
         setResponsibleSpinner()
         setDatePickers()
         setBackBtn()
+        setBtn()
         return binding.root
     }
 
@@ -94,5 +100,43 @@ class ProjectAddFragment : Fragment() {
         binding.projectsAddBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+    }
+
+    private fun setBtn(){
+        binding.projectsAddBtn.setOnClickListener {
+            val pupOk = Dialog(requireContext())
+            val bindingPupOk = PopupOkBinding.inflate(layoutInflater)
+            pupOk.setContentView(bindingPupOk.root)
+            pupOk.setCancelable(true)
+            pupOk.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            pupOk.window?.attributes?.windowAnimations = R.style.CustomDialogAnimation
+            val okBtn = bindingPupOk.pupOkBtn
+            try{
+                ProjectsAddController.projectsAddAttempt(binding.projectsAddName.text.toString(),
+                    binding.projectsAddBudget.text.toString().toDouble(),
+                    binding.projectsAddDescription.text.toString(),
+                    convertDate(binding.projectsAddStartDate.text.toString()),
+                    convertDate(binding.projectsAddEndDate.text.toString()),
+                    binding.projectsAddResponsible.selectedItem.toString()){
+                    val jsonObject = JsonParser().parse(it.body?.string()).asJsonObject
+                    activity?.runOnUiThread {
+                        bindingPupOk.pupYesNoDescription.text = jsonObject.get("message").asString
+                    }
+                }
+            }catch (e : Exception){
+                bindingPupOk.pupYesNoDescription.text = getString(R.string.failed_server)
+            }
+            okBtn.setOnClickListener{
+                pupOk.dismiss()
+            }
+            pupOk.show()
+        }
+    }
+
+    private fun convertDate(date : String) : String{
+        val formatter = java.text.SimpleDateFormat("dd/MM/yyyy", Locale.US)
+        val parser = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+        val date = formatter.parse(date)
+        return parser.format(date)
     }
 }
