@@ -113,7 +113,7 @@ class ProjectAddFragment : Fragment() {
             val okBtn = bindingPupOk.pupOkBtn
             try{
                 ProjectsAddController.projectsAddAttempt(binding.projectsAddName.text.toString(),
-                    binding.projectsAddBudget.text.toString().toDouble(),
+                    binding.projectsAddBudget.text.toString().toDoubleOrNull(),
                     binding.projectsAddDescription.text.toString(),
                     convertDate(binding.projectsAddStartDate.text.toString()),
                     convertDate(binding.projectsAddEndDate.text.toString()),

@@ -5,7 +5,7 @@ import com.google.gson.Gson
 class ProjectsAddController {
     companion object {
         private val db = Database()
-        fun projectsAddAttempt(name: String, budget: Double, description: String,
+        fun projectsAddAttempt(name: String, budget: Double?, description: String,
                                     startDate: String, endDate: String, responsible: String,
                                     callback: (okhttp3.Response) -> Unit){
             val endpoint ="proyectos/"

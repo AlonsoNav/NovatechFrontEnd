@@ -1,60 +1,100 @@
 package com.app.novatech.ui
 
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.app.novatech.R
+import android.widget.ArrayAdapter
+import com.app.novatech.databinding.FragmentProjectAddTaskBinding
+import com.app.novatech.databinding.PopupOkBinding
+import com.app.novatech.util.CollaboratorsGetFreeController
+import com.app.novatech.util.ProjectCollaboratorsGetController
+import com.app.novatech.util.ResourcesAddController
+import com.app.novatech.util.TasksAddController
+import com.google.gson.JsonParser
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProjectAddTaskFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProjectAddTaskFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentProjectAddTaskBinding? = null
+    private val binding get() = _binding!!
+    private val collaboratorsList = ArrayList<String>()
+    private lateinit var collaboratorsAdapter: ArrayAdapter<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_project_add_task, container, false)
+        _binding = FragmentProjectAddTaskBinding.inflate(inflater, container, false)
+        setResponsibleSpinner()
+        getCollaboratorsList()
+        setBackBtn()
+        setBtn()
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProjectAddTaskFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProjectAddTaskFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun getCollaboratorsList(){
+        try{
+            ProjectCollaboratorsGetController.getProjectCollaboratorsAttempt(arguments?.getString("name")!!) {
+                val jsonArray = JsonParser().parse(it.body?.string()).asJsonArray
+                for(jsonObject in jsonArray){
+                    collaboratorsList.add(
+                        jsonObject.asJsonObject.get("correo").asString
+                    )
+                }
+                activity?.runOnUiThread {
+                    collaboratorsAdapter.notifyDataSetChanged()
                 }
             }
+        }catch (_: Exception){
+
+        }
+    }
+
+    private fun setResponsibleSpinner(){
+        collaboratorsAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, collaboratorsList)
+        collaboratorsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.projectAddTaskResponsible.adapter = collaboratorsAdapter
+    }
+
+    private fun setBtn(){
+        binding.projectAddTaskBtn.setOnClickListener {
+            val pupOk = Dialog(requireContext())
+            val bindingPupOk = PopupOkBinding.inflate(layoutInflater)
+            pupOk.setContentView(bindingPupOk.root)
+            pupOk.setCancelable(true)
+            pupOk.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            pupOk.window?.attributes?.windowAnimations = com.app.novatech.R.style.CustomDialogAnimation
+            val okBtn = bindingPupOk.pupOkBtn
+            try{
+                TasksAddController.tasksAddAttempt(arguments?.getString("name")!!,
+                    binding.projectAddTaskName.text.toString(),
+                    binding.projectAddTaskDescription.text.toString(),
+                    binding.projectAddTaskResponsible.selectedItem.toString(),
+                    binding.projectAddTaskStoryPoints.text.toString().toIntOrNull()){
+                    val jsonObject = JsonParser().parse(it.body?.string()).asJsonObject
+                    activity?.runOnUiThread {
+                        bindingPupOk.pupYesNoDescription.text = jsonObject.get("message").asString
+                    }
+                }
+            }catch (e : Exception){
+                bindingPupOk.pupYesNoDescription.text = getString(com.app.novatech.R.string.failed_server)
+            }
+            okBtn.setOnClickListener{
+                pupOk.dismiss()
+            }
+            pupOk.show()
+        }
+    }
+
+    private fun setBackBtn(){
+        binding.projectAddTaskBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 }
