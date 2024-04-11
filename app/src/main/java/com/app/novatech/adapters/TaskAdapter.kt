@@ -1,5 +1,6 @@
 package com.app.novatech.adapters
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +12,17 @@ import com.app.novatech.R
 import com.app.novatech.model.Tasks
 import com.app.novatech.ui.Menu
 import com.app.novatech.ui.ProjectEditTaskFragment
+import com.app.novatech.ui.ProjectTaskFragment
 
-class TaskAdapter (private val menu: Menu, private val tasksList : ArrayList<Tasks>) : RecyclerView.Adapter<TaskAdapter.MyViewHolder>(){
+class TaskAdapter (private val menu: Menu, private val tasksList : ArrayList<Tasks>, private val name: String,
+    private val isAdmin: Boolean, private val responsible: String, private val user: String) : RecyclerView.Adapter<TaskAdapter.MyViewHolder>(){
     class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val name : TextView = itemView.findViewById(R.id.item_task_name)
         val description : TextView = itemView.findViewById(R.id.item_task_description)
         val storyPoints : TextView = itemView.findViewById(R.id.item_task_story_points_text)
         val responsible : TextView = itemView.findViewById(R.id.item_task_responsible)
         val edit : ImageView = itemView.findViewById(R.id.item_task_edit)
+        val delete : ImageView = itemView.findViewById(R.id.item_task_delete)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -36,8 +40,18 @@ class TaskAdapter (private val menu: Menu, private val tasksList : ArrayList<Tas
         holder.description.text = currentItem.description
         holder.responsible.text = currentItem.responsible
         holder.storyPoints.text = currentItem.storyPoints.toString()
+        if(!isAdmin or (responsible != user)){
+            holder.edit.visibility = View.GONE
+            holder.delete.visibility = View.GONE
+        }
         holder.edit.setOnClickListener {
-            menu.replaceFragment(ProjectEditTaskFragment())
+            val taskEditFragment = ProjectEditTaskFragment()
+            val bundle = Bundle().apply {
+                putString("name", name)
+                putParcelable("task", currentItem)
+            }
+            taskEditFragment.arguments = bundle
+            menu.replaceFragment(taskEditFragment)
         }
     }
 }

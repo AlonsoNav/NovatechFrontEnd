@@ -8,33 +8,16 @@ import android.view.ViewGroup
 import com.app.novatech.adapters.TaskListAdapter
 import com.app.novatech.databinding.FragmentProjectTaskBinding
 import com.app.novatech.model.Tasks
+import com.app.novatech.util.TasksGetController
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.JsonParser
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProjectTaskFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProjectTaskFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var _binding: FragmentProjectTaskBinding? = null
     private val binding get() = _binding!!
     private lateinit var menu : Menu
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var adapter: TaskListAdapter
+    private val taskList = ArrayList<Tasks>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,8 +25,12 @@ class ProjectTaskFragment : Fragment() {
     ): View? {
         _binding = FragmentProjectTaskBinding.inflate(inflater, container, false)
         menu = requireActivity() as Menu
-        setAddBtn()
+        if(taskList.isNotEmpty())
+            taskList.clear()
         setViewPager()
+        getTask()
+        setAddBtn()
+        setBackBtn()
         return binding.root
     }
 
@@ -52,12 +39,33 @@ class ProjectTaskFragment : Fragment() {
         _binding = null
     }
 
+    private fun getTask(){
+        try{
+            TasksGetController.getTasksAttempt(arguments?.getString("name")!!) {
+                val jsonArray = JsonParser().parse(it.body?.string()).asJsonArray
+                for(jsonObject in jsonArray){
+                    taskList.add(
+                        Tasks(
+                            jsonObject.asJsonObject.get("nombre").asString,
+                            jsonObject.asJsonObject.get("descripcion").asString,
+                            jsonObject.asJsonObject.get("storyPoints").asInt,
+                            jsonObject.asJsonObject.get("responsable").asString,
+                            jsonObject.asJsonObject.get("estado").asString
+                        )
+                    )
+                }
+                activity?.runOnUiThread {
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }catch(_: Exception){
+
+        }
+    }
+
     private fun setViewPager(){
-        val taskList = arrayListOf(
-            Tasks("Task1", "Description1", 18, "User1", "Todo"),
-            Tasks("Task2", "Description2", 8, "User2", "Doing"),
-            Tasks("Task3", "Description3", 28, "User3", "Done"))
-        val adapter = TaskListAdapter(taskList, childFragmentManager, lifecycle)
+        adapter = TaskListAdapter(taskList, childFragmentManager, lifecycle, arguments?.getString("name")!!,
+            arguments?.getString("responsible")!!, arguments?.getString("user")!!, arguments?.getBoolean("isAdmin")!!)
         binding.projectTaskViewPager.adapter = adapter
         TabLayoutMediator(binding.projectTaskTabLayout, binding.projectTaskViewPager) { tab, position ->
             tab.text = when (position) {
@@ -70,28 +78,25 @@ class ProjectTaskFragment : Fragment() {
     }
 
     private fun setAddBtn(){
+        if(!arguments?.getBoolean("isAdmin")!! and (arguments?.getString("user")!! != arguments?.getString(
+                "responsible"
+            )!!)
+        ){
+            binding.projectTaskAddBtn.visibility = View.GONE
+        }
         binding.projectTaskAddBtn.setOnClickListener {
-            menu.replaceFragment(ProjectAddTaskFragment())
+            val taskAddFragment = ProjectAddTaskFragment()
+            val bundle = Bundle().apply {
+                putString("name", arguments?.getString("name")!!)
+            }
+            taskAddFragment.arguments = bundle
+            menu.replaceFragment(taskAddFragment)
         }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProjectTaskFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProjectTaskFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun setBackBtn(){
+        binding.projectTaskBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 }

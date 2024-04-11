@@ -1,60 +1,133 @@
 package com.app.novatech.ui
 
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import com.app.novatech.R
+import com.app.novatech.databinding.FragmentProjectEditTaskBinding
+import com.app.novatech.databinding.PopupOkBinding
+import com.app.novatech.databinding.PopupYesnoBinding
+import com.app.novatech.model.Tasks
+import com.app.novatech.util.ProjectCollaboratorsGetController
+import com.app.novatech.util.TasksEditController
+import com.google.gson.JsonParser
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProjectEditTaskFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProjectEditTaskFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentProjectEditTaskBinding? = null
+    private val binding get() = _binding!!
+    private val statusItems = arrayOf("To do", "Doing", "Done")
+    private val collaboratorsList = ArrayList<String>()
+    private lateinit var collaboratorsAdapter: ArrayAdapter<String>
+    private lateinit var task: Tasks
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_project_edit_task, container, false)
+        _binding = FragmentProjectEditTaskBinding.inflate(inflater, container, false)
+        setResponsibleSpinner()
+        setStatusSpinner()
+        getCollaboratorsList()
+        setBackBtn()
+        setBtn()
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProjectEditTaskFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProjectEditTaskFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun setResponsibleSpinner(){
+        collaboratorsAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, collaboratorsList)
+        collaboratorsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.projectEditTaskResponsible.adapter = collaboratorsAdapter
+    }
+
+    private fun getCollaboratorsList(){
+        try{
+            ProjectCollaboratorsGetController.getProjectCollaboratorsAttempt(arguments?.getString("name")!!) {
+                val jsonArray = JsonParser().parse(it.body?.string()).asJsonArray
+                for(jsonObject in jsonArray){
+                    collaboratorsList.add(
+                        jsonObject.asJsonObject.get("correo").asString
+                    )
+                }
+                activity?.runOnUiThread {
+                    collaboratorsAdapter.notifyDataSetChanged()
+                    setData()
                 }
             }
+        }catch (_: Exception){
+
+        }
+    }
+
+    private fun setStatusSpinner(){
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, statusItems)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.projectEditTaskStatus.adapter = adapter
+    }
+
+    private fun setData(){
+        task= arguments?.getParcelable("task")!!
+        binding.projectEditTaskName.setText(task.name)
+        binding.projectEditTaskDescription.setText(task.description)
+        binding.projectEditTaskStoryPoints.setText(task.storyPoints.toString())
+        binding.projectEditTaskResponsible.setSelection(collaboratorsList.indexOf(task.responsible))
+        binding.projectEditTaskStatus.setSelection(statusItems.indexOf(task.status))
+    }
+
+    private fun setBtn(){
+        binding.projectEditTaskBtn.setOnClickListener{
+            val pupYesno= Dialog(requireContext())
+            val bindingPup = PopupYesnoBinding.inflate(layoutInflater)
+            pupYesno.setContentView(bindingPup.root)
+            pupYesno.setCancelable(true)
+            pupYesno.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            pupYesno.window?.attributes?.windowAnimations = R.style.CustomDialogAnimation
+            val yesBtn = bindingPup.pupYesBtn
+            val noBtn = bindingPup.pupNoBtn
+            bindingPup.pupYesNoDescription.text = getString(R.string.popup_yesno_project_individual)
+            yesBtn.setOnClickListener{
+                val pupOk = Dialog(requireContext())
+                val bindingPupOk = PopupOkBinding.inflate(layoutInflater)
+                pupOk.setContentView(bindingPupOk.root)
+                pupOk.setCancelable(true)
+                pupOk.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                pupOk.window?.attributes?.windowAnimations = R.style.CustomDialogAnimation
+                val okBtn = bindingPupOk.pupOkBtn
+                try{
+                    TasksEditController.tasksEditAttempt(arguments?.getString("name")!!,
+                        task.name,
+                        binding.projectEditTaskName.text.toString(),
+                        binding.projectEditTaskDescription.text.toString(),
+                        binding.projectEditTaskResponsible.selectedItem.toString(),
+                        binding.projectEditTaskStoryPoints.text.toString().toIntOrNull(),
+                        binding.projectEditTaskStatus.selectedItem.toString()){
+                        val jsonObject = JsonParser().parse(it.body?.string()).asJsonObject
+                        activity?.runOnUiThread {
+                            bindingPupOk.pupYesNoDescription.text = jsonObject.get("message").asString
+                        }
+                    }
+                }catch (e : Exception){
+                    bindingPupOk.pupYesNoDescription.text = getString(R.string.failed_server)
+                }
+                okBtn.setOnClickListener{
+                    pupOk.dismiss()
+                }
+                pupYesno.dismiss()
+                pupOk.show()
+            }
+            noBtn.setOnClickListener {
+                pupYesno.dismiss()
+            }
+            pupYesno.show()
+        }
+    }
+
+    private fun setBackBtn(){
+        binding.projectEditTaskBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 }
