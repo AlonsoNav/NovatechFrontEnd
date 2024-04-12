@@ -8,7 +8,7 @@
     android:layout_marginBottom="14dp">
 
     <TextView
-        android:id="@+id/item_collaborator_name"
+        android:id="@+id/item_project_add_collaborator_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/item_log_title"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/item_collaborator_email"
+        android:id="@+id/item_project_add_collaborator_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
@@ -28,12 +28,13 @@
         android:textColor="@color/item_selected"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/item_collaborator_name" />
+        app:layout_constraintTop_toBottomOf="@id/item_project_add_collaborator_name" />
 
     <ImageView
-        android:id="@+id/item_collaborator_add"
+        android:id="@+id/item_project_add_collaborator_add"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        app:tint="@color/item_selected"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/add"
