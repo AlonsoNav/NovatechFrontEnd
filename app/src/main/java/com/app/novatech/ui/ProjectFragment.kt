@@ -38,6 +38,7 @@ class ProjectFragment : Fragment() {
         setRecyclerView()
         getProjectsList()
         setSearchBar()
+        setChart()
         setAddBtn()
         return binding.root
     }
@@ -101,6 +102,17 @@ class ProjectFragment : Fragment() {
                 return true
             }
         })
+    }
+
+    private fun setChart(){
+        binding.projectsChart.setOnClickListener{
+            val barChartFragment = BarChartFragment()
+            val bundle = Bundle().apply {
+                putSerializable("user", user)
+            }
+            barChartFragment.arguments = bundle
+            menu.replaceFragment(barChartFragment)
+        }
     }
 
     private fun setAddBtn(){
