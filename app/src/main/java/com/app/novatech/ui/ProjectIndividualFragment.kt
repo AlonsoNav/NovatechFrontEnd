@@ -47,11 +47,11 @@ class ProjectIndividualFragment : Fragment() {
         getCollaboratorsList()
         getProject(arguments?.getString("name")!!)
         setBackBtn()
+        setAddCollaboratorsBtn()
         setHistoryBtn()
         setResourcesBtn()
         setMeetingsBtn()
         setTasksBtn()
-        setAddBtn()
         setButton()
         return binding.root
     }
@@ -59,6 +59,20 @@ class ProjectIndividualFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setAddCollaboratorsBtn(){
+        binding.projectIndividualAddPerson.setOnClickListener{
+            val projectCollaboratorsFragment = ProjectCollaboratorsFragment()
+            val bundle = Bundle().apply {
+                putString("name", arguments?.getString("name")!!)
+                putString("responsible", project.responsable)
+                putString("user", arguments?.getString("user")!!)
+                putBoolean("isAdmin", arguments?.getBoolean("isAdmin")!!)
+            }
+            projectCollaboratorsFragment.arguments = bundle
+            menu.replaceFragment(projectCollaboratorsFragment)
+        }
     }
 
     private fun setResponsibleSpinner(){
@@ -160,12 +174,6 @@ class ProjectIndividualFragment : Fragment() {
     private fun setMeetingsBtn(){
         binding.projectIndividualMeeting.setOnClickListener{
             menu.replaceFragment(meetingsFragment)
-        }
-    }
-
-    private fun setAddBtn(){
-        binding.projectIndividualAddPerson.setOnClickListener{
-            menu.replaceFragment(ProjectAddCollaboratorsFragment())
         }
     }
 

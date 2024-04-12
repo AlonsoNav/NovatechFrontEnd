@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.app.novatech.R
 import com.app.novatech.adapters.CollaboratorAdapter
 import com.app.novatech.databinding.FragmentCollaboratorsAdminBinding
 import com.app.novatech.model.Collaborator
