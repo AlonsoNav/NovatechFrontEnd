@@ -1,62 +1,95 @@
 package com.app.novatech.ui
 
 import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.app.novatech.adapters.LogAdapter
-import com.app.novatech.databinding.FragmentMeetingListBinding
-import com.app.novatech.databinding.FragmentProjectLogsBinding
-import com.app.novatech.model.Logs
+import com.app.novatech.adapters.MeetingAdapter
+import com.app.novatech.databinding.FragmentProjectMeetingsBinding
+import com.app.novatech.model.Meeting
+import com.app.novatech.util.MeetingsGetController
+import com.app.novatech.util.ResourcesGetController
+import com.google.gson.JsonParser
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ProjectMeetingsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProjectMeetingsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private lateinit var logList: ArrayList<Logs>
-    private var _binding: FragmentMeetingListBinding? = null
+    private var _binding: FragmentProjectMeetingsBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var menu : Menu
+    private var isAdmin = false
+    private lateinit var adapter : MeetingAdapter
+    private val meetingsList = ArrayList<Meeting>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMeetingListBinding.inflate(inflater, container, false)
+        _binding = FragmentProjectMeetingsBinding.inflate(inflater, container, false)
+        menu = requireActivity() as Menu
+        isAdmin = arguments?.getBoolean("isAdmin")!! or (arguments?.getString("user")!! == arguments?.getString("responsible")!!)
+        if(meetingsList.isNotEmpty())
+            meetingsList.clear()
+        setRecyclerView()
+        getMeetingsList()
+        setAddBtn()
+        setBackBtn()
         return binding.root
+    }
+
+    private fun getMeetingsList(){
+        try{
+            MeetingsGetController.getMeetingsAttempt(arguments?.getString("name")!!) {
+                val jsonArray = JsonParser().parse(it.body?.string()).asJsonArray
+                Log.d("json", jsonArray.toString())
+                /*for(jsonObject in jsonArray){
+                    meetingsList.add(
+                        Meeting(
+                            jsonObject.asJsonObject.get("temaReunion").asString,
+                            jsonObject.asJsonObject.get("descripcion").asString,
+                            jsonObject.asJsonObject.get("fecha").asString,
+                            jsonObject.asJsonObject.get("medioReunion").asString,
+                        )
+                    )
+                }*/
+                activity?.runOnUiThread {
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }catch(_: Exception){
+
+        }
+    }
+
+    private fun setBackBtn(){
+        binding.projectMeetingsBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+    }
+
+    private fun setRecyclerView(){
+        adapter = MeetingAdapter(requireContext(), layoutInflater, meetingsList, arguments?.getString("name")!!, isAdmin, activity)
+        binding.projectMeetingsRv.layoutManager = LinearLayoutManager(requireContext())
+        binding.projectMeetingsRv.setHasFixedSize(true)
+        binding.projectMeetingsRv.adapter = adapter
+    }
+
+    private fun setAddBtn(){
+        if(!isAdmin)
+            binding.projectMeetingsAdd.visibility = View.GONE
+        binding.projectMeetingsAdd.setOnClickListener {
+            val meetingsAddFragment = ProjectAddMeetingsFragment()
+            val bundle = Bundle().apply {
+                putString("name", arguments?.getString("name")!!)
+            }
+            meetingsAddFragment.arguments = bundle
+            menu.replaceFragment(meetingsAddFragment)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProjectLogsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProjectMeetingsFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
     }
 }

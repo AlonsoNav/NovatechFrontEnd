@@ -24,7 +24,6 @@ import com.google.gson.JsonParser
 class ProjectIndividualFragment : Fragment() {
     private var _binding: FragmentProjectIndividualBinding? = null
     private val binding get() = _binding!!
-    private val meetingsFragment = ProjectMeetingsFragment()
     private val statusItems = arrayOf("Active", "Inactive", "Completed")
     private lateinit var menu : Menu
     private lateinit var project : Project
@@ -173,6 +172,14 @@ class ProjectIndividualFragment : Fragment() {
 
     private fun setMeetingsBtn(){
         binding.projectIndividualMeeting.setOnClickListener{
+            val meetingsFragment = ProjectMeetingsFragment()
+            val bundle = Bundle().apply {
+                putString("name", arguments?.getString("name")!!)
+                putString("responsible", project.responsable)
+                putString("user", arguments?.getString("user")!!)
+                putBoolean("isAdmin", arguments?.getBoolean("isAdmin")!!)
+            }
+            meetingsFragment.arguments = bundle
             menu.replaceFragment(meetingsFragment)
         }
     }

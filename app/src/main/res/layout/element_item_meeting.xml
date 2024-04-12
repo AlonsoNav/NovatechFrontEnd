@@ -1,90 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="380dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/round_popup_gray"
-    android:padding="16dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:weightSum="1">
+    android:background="@drawable/round_item"
+    android:padding="12dp"
+    android:layout_marginBottom="14dp">
 
-    <LinearLayout
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/item_meeting_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.85"
-        android:orientation="vertical"
-        android:paddingEnd="16dp">
+        android:text="@string/item_log_title"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/item_selected"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_meeting_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="@string/item_task_responsible"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/item_selected"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_meeting_title" />
+
+    <TextView
+        android:id="@+id/item_meeting_description"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/item_log_description"
+        android:fontFamily="@font/roboto_light"
+        android:textColor="@color/item_selected"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_meeting_medium" />
+
+    <ImageView
+        android:id="@+id/item_meeting_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/delete"
+        android:contentDescription="@string/item_task_delete" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_meeting_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_item"
+        android:backgroundTint="@color/white"
+        android:padding="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/item_meeting_date_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:text="Title"
+            android:text="12/04/2024 12:00"
+            android:fontFamily="@font/roboto_light"
             android:textColor="@color/item_selected"
-            android:textSize="18sp" />
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-            android:id="@+id/tvSubtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:text="Medium"
-            android:textColor="@color/item_selected"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tvDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
-            android:textColor="@color/item_selected"
-            android:textSize="12sp" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="65dp"
-        android:layout_height="81dp"
-        android:layout_weight="0.15">
-
-        <ImageButton
-            android:id="@+id/btnDelete"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="14dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="delete"
-            android:src="@drawable/trash" />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/round_popup_gray"
-            android:padding="8dp">
-
-            <ImageView
-                android:id="@+id/ivCalendar"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="calendar"
-                android:src="@drawable/calendar" />
-
-            <TextView
-                android:id="@+id/tvDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="11dp"
-                android:layout_toEndOf="@id/ivCalendar"
-                android:fontFamily="@font/roboto"
-                android:paddingStart="8dp"
-                android:text="11/11/24"
-                android:textColor="@color/item_selected"
-                android:textSize="12sp" />
-        </RelativeLayout>
-    </RelativeLayout>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

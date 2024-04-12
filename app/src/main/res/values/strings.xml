@@ -127,4 +127,10 @@
     <string name="collaborators_edit_title">Edit collaborator</string>
     <string name="collaborators_edit_password">Write the new password</string>
     <string name="number_format_exception">You must write a number in the budget field</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="project_meetings_title">Meetings</string>
+    <string name="projects_add_meeting">New meeting</string>
+    <string name="project_add_meeting_medium">Medium:</string>
+    <string name="project_add_meeting_btn">Add meeting</string>
 </resources>
