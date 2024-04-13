@@ -215,8 +215,8 @@ class CollaboratorsEditFragment : Fragment() {
                         email,
                         department,
                         phone,
-                        project,
-                        password){
+                        password,
+                        project){
                         val jsonObject = JsonParser().parse(it.body?.string()).asJsonObject
                         if(it.isSuccessful)
                             getUser()

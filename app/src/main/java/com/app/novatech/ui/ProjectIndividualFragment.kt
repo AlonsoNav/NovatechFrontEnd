@@ -209,8 +209,10 @@ class ProjectIndividualFragment : Fragment() {
                 position: Int,
                 id: Long
             ){
-                if(position != collaboratorsList.indexOf(project.responsable))
+                if(position != collaboratorsList.indexOf(project.responsable)){
                     binding.projectIndividualBtn.visibility = View.VISIBLE
+                    responsible = binding.projectIndividualCoordinator.selectedItem.toString()
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -226,6 +228,7 @@ class ProjectIndividualFragment : Fragment() {
             ) {
                 if(position != statusItems.indexOf(project.estado)){
                     binding.projectIndividualBtn.visibility = View.VISIBLE
+                    status = binding.projectIndividualStatus.selectedItem.toString()
                 }
             }
 
@@ -278,6 +281,8 @@ class ProjectIndividualFragment : Fragment() {
             val noBtn = bindingPup.pupNoBtn
             bindingPup.pupYesNoDescription.text = getString(R.string.popup_yesno_project_individual)
             yesBtn.setOnClickListener{
+                val budget = if(binding.projectIndividualBudgetEt.visibility == View.VISIBLE) binding.projectIndividualBudgetEt.text.toString().toDouble() else null
+                val description = if(binding.projectIndividualDescriptionEt.visibility == View.VISIBLE) binding.projectIndividualDescriptionEt.text.toString() else null
                 unSetEditableTextViews()
                 val pupOk = Dialog(requireContext())
                 val bindingPupOk = PopupOkBinding.inflate(layoutInflater)
@@ -286,8 +291,6 @@ class ProjectIndividualFragment : Fragment() {
                 pupOk.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 pupOk.window?.attributes?.windowAnimations = R.style.CustomDialogAnimation
                 val okBtn = bindingPupOk.pupOkBtn
-                val budget = if(binding.projectIndividualBudgetEt.visibility == View.VISIBLE) binding.projectIndividualBudgetEt.text.toString().toDouble() else null
-                val description = if(binding.projectIndividualDescriptionEt.visibility == View.VISIBLE) binding.projectIndividualDescriptionEt.text.toString() else null
                 try{
                     ProjectsEditController.projectsEditAttempt(project.nombre,
                         budget,

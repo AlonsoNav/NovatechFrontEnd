@@ -40,7 +40,7 @@ class TaskAdapter (private val menu: Menu, private val tasksList : ArrayList<Tas
         holder.description.text = currentItem.description
         holder.responsible.text = currentItem.responsible
         holder.storyPoints.text = currentItem.storyPoints.toString()
-        if(!isAdmin or (responsible != user)){
+        if(!isAdmin and (responsible != user)){
             holder.edit.visibility = View.GONE
             holder.delete.visibility = View.GONE
         }
@@ -52,6 +52,9 @@ class TaskAdapter (private val menu: Menu, private val tasksList : ArrayList<Tas
             }
             taskEditFragment.arguments = bundle
             menu.replaceFragment(taskEditFragment)
+        }
+        holder.delete.setOnClickListener {
+
         }
     }
 }

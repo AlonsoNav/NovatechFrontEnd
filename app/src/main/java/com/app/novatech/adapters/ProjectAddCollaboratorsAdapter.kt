@@ -37,7 +37,7 @@ class ProjectAddCollaboratorsAdapter(private val activity: FragmentActivity?,
     private var filteredList: List<Collaborator> = collaboratorsList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.element_item_project_collaborator, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.element_item_project_add_collaborator, parent, false)
         return MyViewHolder(itemView)
     }
 

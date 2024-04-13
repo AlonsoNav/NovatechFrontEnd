@@ -3,6 +3,7 @@ package com.app.novatech.ui
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -111,12 +112,14 @@ class ProjectAddFragment : Fragment() {
             pupOk.window?.setBackgroundDrawableResource(android.R.color.transparent)
             pupOk.window?.attributes?.windowAnimations = R.style.CustomDialogAnimation
             val okBtn = bindingPupOk.pupOkBtn
+            val startDate = if(binding.projectsAddStartDate.text.toString() != "") convertDate(binding.projectsAddStartDate.text.toString()) else null
+            val endDate = if(binding.projectsAddEndDate.text.toString() != "") convertDate(binding.projectsAddEndDate.text.toString()) else null
             try{
                 ProjectsAddController.projectsAddAttempt(binding.projectsAddName.text.toString(),
                     binding.projectsAddBudget.text.toString().toDoubleOrNull(),
                     binding.projectsAddDescription.text.toString(),
-                    convertDate(binding.projectsAddStartDate.text.toString()),
-                    convertDate(binding.projectsAddEndDate.text.toString()),
+                    startDate,
+                    endDate,
                     binding.projectsAddResponsible.selectedItem.toString()){
                     val jsonObject = JsonParser().parse(it.body?.string()).asJsonObject
                     activity?.runOnUiThread {
@@ -124,6 +127,7 @@ class ProjectAddFragment : Fragment() {
                     }
                 }
             }catch (e : Exception){
+                Log.d("Exception", e.toString())
                 bindingPupOk.pupYesNoDescription.text = getString(R.string.failed_server)
             }
             okBtn.setOnClickListener{

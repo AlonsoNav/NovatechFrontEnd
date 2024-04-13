@@ -19,7 +19,7 @@ import com.google.gson.JsonParser
 class ProjectEditTaskFragment : Fragment() {
     private var _binding: FragmentProjectEditTaskBinding? = null
     private val binding get() = _binding!!
-    private val statusItems = arrayOf("To do", "Doing", "Done")
+    private val statusItems = arrayOf("Todo", "Doing", "Done")
     private val collaboratorsList = ArrayList<String>()
     private lateinit var collaboratorsAdapter: ArrayAdapter<String>
     private lateinit var task: Tasks

@@ -1,6 +1,7 @@
 package com.app.novatech.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -43,11 +44,12 @@ class ProjectLogsFragment : Fragment() {
                 for(jsonObject in jsonArray){
                     logList.add(
                         Logs(
-                        jsonObject.asJsonObject.get("nombre").asString,
+                        jsonObject.asJsonObject.get("titulo").asString,
                         jsonObject.asJsonObject.get("descripcion").asString,
-                        jsonObject.asJsonObject.get("fecha").asString.substring(0, 10),
+                        jsonObject.asJsonObject.get("tiempo").asString.substring(0, 10),
                         )
                     )
+                    Log.d("Lista cambio", logList.toString())
                 }
                 activity?.runOnUiThread {
                     adapter.notifyDataSetChanged()
@@ -62,7 +64,7 @@ class ProjectLogsFragment : Fragment() {
         adapter = LogAdapter(logList)
         binding.projectLogRv.layoutManager = LinearLayoutManager(requireContext())
         binding.projectLogRv.setHasFixedSize(true)
-        binding.projectLogRv.adapter = LogAdapter(logList)
+        binding.projectLogRv.adapter = adapter
     }
 
     private fun setBackBtn(){

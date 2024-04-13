@@ -6,7 +6,7 @@ class ProjectsAddController {
     companion object {
         private val db = Database()
         fun projectsAddAttempt(name: String, budget: Double?, description: String,
-                                    startDate: String, endDate: String, responsible: String,
+                                    startDate: String?, endDate: String?, responsible: String?,
                                     callback: (okhttp3.Response) -> Unit){
             val endpoint ="proyectos/"
             val json = mutableMapOf<String, Any?>(
@@ -14,7 +14,7 @@ class ProjectsAddController {
                 "presupuesto" to budget,
                 "descripcion" to description,
                 "fechaInicio" to startDate,
-                "fechaFin" to endDate,
+                "fechaFinal" to endDate,
                 "correoResponsable" to responsible
             )
             val jsonString = Gson().toJson(json)
